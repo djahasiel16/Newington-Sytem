@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><h1 class="text-success">NWS</h1></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">DAVAO</a>
+          </li> -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              DAVAO
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'davao_add_request' %}">Make Request for Davao</a></li>
+              <!-- <li><a class="dropdown-item" href="{% url 'surigao' %}">Surigao</a></li>
+              <li><a class="dropdown-item" href="{% url 'cotabato' %}">Cotabato</a></li> -->
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'list_view_requests' %}">Monitoring</a></li>
+              <li><a class="dropdown-item" href="{% url 'list_view_items' %}">Requested Items</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              SURIGAO
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'surigao_add_request' %}">Make Request for Surigao</a></li>
+              <!-- <li><a class="dropdown-item" href="{% url 'cotabato' %}">Cotabato</a></li>
+              <li><a class="dropdown-item" href="{% url 'davao' %}">Davao</a></li> -->
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Others</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              COTABATO
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'cotabato_add_request' %}">Make Request for Cotabato</a></li>
+              <!-- <li><a class="dropdown-item" href="{% url 'davao' %}">Davao</a></li>
+              <li><a class="dropdown-item" href="{% url 'surigao' %}">Surigao</a></li> -->
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Others</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>

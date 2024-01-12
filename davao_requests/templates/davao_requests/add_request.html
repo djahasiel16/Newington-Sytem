@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row justify-content-center" style="width: 30%;">
+  <div class="col">
+    <div class="fw-medium bg-primary text-white text-center" style="width: 30px; height: 30px; border-radius: 15px; padding: 0px;">1</div>
+    <p class="fw-medium">REQUEST HEADER</p>
+  </div>
+  <div class="col align-items-center">
+    <div class="fw-medium text-tertiary bg-secondary text-center" style="width: 30px; height: 30px; border-radius: 15px; padding: 0px;">2</div>
+    <p class="fw-medium">REQUEST ITEMS</p>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-8">
+      <form method="post" class="form-control fw-medium shadow">
+          <h4>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
+            </svg>
+            Davao Request Form
+          </h4>
+          {% csrf_token %}
+          {{form|crispy}}
+          <button type="submit" class="btn btn-success my-4">Submit</button>
+      </form>
+  </div>
+
+  <script>
+    $(function () {
+      $("#requested_datepicker").datepicker();
+    });
+
+    $(function () {
+      $("#needed_datepicker").datepicker();
+    });
+  </script>
+</div>
+
+
+
+{% endblock %}

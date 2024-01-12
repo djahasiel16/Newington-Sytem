@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Requests{% endblock %}
+
+{% block content%}
+<h3>DAVAO REQUESTS</h3>
+<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0"></div>
+    <table class="table table-striped" style="font-size: 10pt;">
+        <tr class="table-success">
+            <th>RS Number</th>
+            <th>Particulars</th>
+            <th>Payee</th>
+            <th>Project</th>
+            <th>Date Requested</th>
+            <th>Date Needed</th>
+            <th>Status</th>
+        </tr>
+    
+        {% for r in rs %}
+        <tr>
+            <td>{{r.rs_number}}</td>
+            <td>{{r.particulars}}</td>
+            <td>{{r.payee}}</td>
+            <td>{{r.project}}</td>
+            <td>{{r.date_requested}}</td>
+            <td>{{r.date_needed}}</td>
+            {% if r.urgent %}
+            <td>
+                <span class="bg-danger rounded-pill text-white px-3 py-1">Urgent</span>
+            </td>
+            {% else %}
+            <td class="bg-success rounded-pill text-white">
+                <span class="bg-success rounded-pill text-white px-3 py-1">Not Urgent</span>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

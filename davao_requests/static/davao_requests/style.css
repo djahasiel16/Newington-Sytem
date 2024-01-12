@@ -1,0 +1,37 @@
+.indent-1 {
+    text-indent: 40px;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #print-section, #print-section * {
+        visibility: visible;
+    }
+    #print-section {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin-top: 10px;
+    }
+}
+
+
+
+#table-header {
+    border: 3px solid black;
+}
+
+#items-table td{
+    border: 1px solid black;
+
+}
+
+
+.circle-shape {
+    border-radius: 15px;
+    width: 30px;
+    height: 30px;
+    background-color: aqua;
+}
