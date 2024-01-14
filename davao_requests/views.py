@@ -88,7 +88,18 @@ def edit_item_view(request, rs_id):
         return redirect(reverse(list_view_items))
     else:
         return render(request, 'davao_requests/edit_item.html', {'form':form})
-    
+
+def edit_request_view(request, rs_number):
+    rs = DavaoRequestHeader.objects.get(pk=rs_number)
+    form = DavaoRequestHeaderForm(request.POST or None, instance=rs)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Request Updated Successfully")
+        return redirect(reverse(list_view_requests))
+    else:
+        return render(request, 'davao_requests/edit_request.html', {'form':form}) 
+ 
 def edit_authorizedPerson_view(request, rs_number):
     instance_data = AuthorizedPersons(DavaoRequestHeader.objects.get(pk=rs_number))
     if request.method == 'POST':
