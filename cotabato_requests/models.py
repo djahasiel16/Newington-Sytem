@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 class CotabatoRequestHeader(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    id = models.BigAutoField(primary_key=True)
-    rs_number = models.CharField(max_length=100)
+    # id = models.BigAutoField(primary_key=True)
+    rs_number = models.CharField(max_length=100, primary_key=True)
     particulars = models.CharField(max_length=200)
     payee = models.CharField(max_length=150)
     project = models.CharField(max_length=100)
@@ -16,10 +16,20 @@ class CotabatoRequestHeader(models.Model):
     created = models.DateField(auto_now=True)
 
 class CotabatoRequestItems(models.Model):
-    rs_number = models.ForeignKey(CotabatoRequestHeader, on_delete=models.CASCADE)
+    header = models.ForeignKey(CotabatoRequestHeader, on_delete=models.CASCADE)
     description = models.CharField(max_length=255)
     quantity = models.IntegerField()
     unit = models.CharField(max_length=20)
     unit_cost = models.IntegerField()
-    amount = models.IntegerField()
+    amount = models.IntegerField(null=True)
     served = models.BooleanField()
+
+
+class AuthorizedPersons(models.Model):
+    header = models.ForeignKey(CotabatoRequestHeader, on_delete=models.CASCADE)
+    firstname = models.CharField(max_length=100)
+    lastname = models.CharField(max_length=100)
+    middle_initial = models.CharField(max_length=100, null=True, blank=True)
+    title = models.CharField(max_length=100)
+    signature = models.ImageField(upload_to='signatures/')
+

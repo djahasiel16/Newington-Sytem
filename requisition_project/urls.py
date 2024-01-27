@@ -24,7 +24,8 @@ urlpatterns = [
     path('', include('main.urls')),
     path('davao/', include('davao_requests.urls')),
     path('surigao/', include('surigao_requests.urls')),
-     path('cotabato/', include('cotabato_requests.urls')),
+    path('cotabato/', include('cotabato_requests.urls')),
+    path('negros/', include('negros_requests.urls')),
 ]
 
 if settings.DEBUG:

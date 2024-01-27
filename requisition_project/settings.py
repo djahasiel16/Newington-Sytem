@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'davao_requests',
     'surigao_requests',
     'cotabato_requests',
+    'negros_requests',
     'crispy_forms',
     'crispy_bootstrap4',
     'bootstrap_datepicker_plus'

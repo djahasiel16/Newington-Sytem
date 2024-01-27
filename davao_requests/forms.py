@@ -18,8 +18,8 @@ class DavaoRequestHeaderForm(forms.ModelForm):
     particulars = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     payee = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     project = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    date_requested = forms.DateField(widget=forms.DateInput(attrs={'class':'form-control', 'id':'requested_datepicker'}))
-    date_needed = forms.DateField(widget=forms.DateInput(attrs={'class':'form-control', 'id':'needed_datepicker'}))
+    date_requested = forms.DateField(widget=forms.DateInput(attrs={'class':'form-control', 'id':'requested_datepicker', 'autocomplete':'off'}))
+    date_needed = forms.DateField(widget=forms.DateInput(attrs={'class':'form-control', 'id':'needed_datepicker', 'autocomplete':'off'}))
 
 
 class DavaoRequestItemsForm(forms.ModelForm):
@@ -45,6 +45,13 @@ class DavaoRequestItemsForm(forms.ModelForm):
         }
 
 class AuthorizedPersonsForm(forms.ModelForm):
+    TITLE_CHOICES = {
+        'RB':'Requested by',
+        'PB':'Prepared by',
+        'CB':'Checked by',
+        'RA':'Recommending Approval',
+        'AB':'Approved by'
+    }
     class Meta:
         model = AuthorizedPersons
         fields = [
@@ -55,12 +62,18 @@ class AuthorizedPersonsForm(forms.ModelForm):
             'title',
             'signature'
         ]
-
+        TITLE_CHOICES = {
+        'Requested by':'Requested by',
+        'Prepared by':'Prepared by',
+        'Checked by':'Checked by',
+        'Recommending Approval':'Recommending Approval',
+        'Approved by':'Approved by'
+    }
         widgets = {
             'header':forms.TextInput(attrs={'class':'form-control'}),
             'firstname':forms.TextInput(attrs={'class':'form-control'}),
             'lastname':forms.TextInput(attrs={'class':'form-control'}),
             'middle_initial':forms.TextInput(attrs={'class':'form-control'}),
-            'title':forms.TextInput(attrs={'class':'form-control'}),
+            'title':forms.Select(attrs={'class':'form-control'}, choices=TITLE_CHOICES),
             'signature':forms.FileInput(attrs={'class':'form-control'})
         }

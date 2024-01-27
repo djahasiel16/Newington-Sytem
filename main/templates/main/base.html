@@ -24,6 +24,11 @@
 
         <link href="{% static 'main/dist/css/bootstrap.min.css' %}" rel="stylesheet">
 
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+
+
         <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -220,16 +225,37 @@
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">{% block content-title %}{% endblock %}</h1>
+                        
+                        <h1 class="h2">{% block content-title %}{{title}}{% endblock %}</h1>
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <div class="btn-group me-2">
-                                <a href="#" class="btn btn-sm btn-outline-secondary">Add Request</a>
+                                {% if title == 'Davao' %}
+                                <a href="{% url 'davao_add_request' %}" class="btn btn-sm btn-outline-secondary">Add Request</a>
+                                <a href="" class="btn btn-sm btn-outline-secondary">Add Items</a>
+                                {% load davao_tags %}
+
+                                {% elif title == 'Cotabato' %}
+                                <a href="{% url 'cotabato_add_request' %}" class="btn btn-sm btn-outline-secondary">Add Request</a>
                                 <a href="#" class="btn btn-sm btn-outline-secondary">Add Items</a>
+                                {% load cotabato_tags %}
+                                {% renderPersonForm %}
+
+                                {% elif title == 'Negros' %}
+                                <a href="{% url 'negros_add_request' %}" class="btn btn-sm btn-outline-secondary">Add Request</a>
+                                <a href="#" class="btn btn-sm btn-outline-secondary">Add Items</a>
+                                {% load negros_tags %}
+
+                                {% elif title == 'Surigao' %}
+                                <a href="{% url 'surigao_add_request' %}" class="btn btn-sm btn-outline-secondary">Add Request</a>
+                                <a href="#" class="btn btn-sm btn-outline-secondary">Add Items</a>
+                                {% load surigao_tags %}
+                                
+                                {% endif %}
                             </div>
                             
                             <div>
                                 <form class="d-flex" role="search">
-                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">    
                                     <button class="btn btn-outline-success" type="submit">Search</button>
                                 </form>
                             </div>
