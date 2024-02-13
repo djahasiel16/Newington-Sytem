@@ -1,0 +1,248 @@
+{% extends 'main/base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block content-title %}
+{{title}} Report
+{% endblock %}
+{% block content %}
+
+{% load maintags %}
+<style>
+    .indent-1 {
+        text-indent: 40px;
+    }
+
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #print-section,
+        #print-section * {
+            visibility: visible;
+        }
+
+        #print-section {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin-top: 15px;
+        }
+    }
+    .authorized-person-img {
+            position: absolute;
+            transform: translate(65px, -60px);
+        }
+</style>
+<!-- For draggables -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{% static 'jquery/jquery-ui.min.css' %}">
+<script src="{% static 'jquery/jquery-ui.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'main/style.css' %}">
+
+<div>
+    <button class="btn btn-outline-dark btn-sm" id="print-btn">
+        <i class="bi bi-printer-fill"></i>
+        <span class="visually-hidden">Button</span>
+        Print Requisition Slip
+    </button>
+</div>
+<hr>
+
+<div id="print-section" style="width: 8.5in; height: 10.9in; position: absolute;" class="p-sm-3 py-sm-1 pb-sm-0">
+    <div class="mx-0">
+        <table class="table table-bordered border-dark mb-2" style="font-size: 9pt;">
+            <tr>
+                <td class="text-center col" colspan="4">
+                    <div class="row">
+                        <span>
+                            <div style="width: 100%; height: 70px;">
+                                <img src="{% static 'authentication/logo.png' %}" alt="" width="450px">
+                            </div>
+                        </span>
+                    </div>
+                    <div class="row">
+                        <span class="">Unit D 3rd Floor, One Felicity Building, Common Wealth Avenue., <br>Telefax: (02)
+                            931-4046/(02) 426-8261</span>
+                    </div>
+                </td>
+                <td class="text-center align-middle">
+                    <span class="fs-5 fw-bold">REQUISITION<br>SLIP</span>
+                    <!-- <p class="py-3 fs-4 fw-medium align-middle"></p> -->
+                </td>
+            </tr>
+        </table>
+
+        <table class="table table-borderless border border-dark fw-medium mb-2" style="font-size: 9pt;">
+            <tr>
+                <td class="px-1">Payee:</td>
+                <td style="width: 500px;" class="border-bottom border-dark px-1">{{header.payee}}</td>
+                <td class="p-1">R.S. #:</td>
+                <td class="border-bottom border-dark px-1" id="rs_number">{{header.rs_number}}</td>
+            </tr>
+
+            <tr>
+                <td class="px-1">Particulars:</td>
+                <td class="border-bottom border-dark px-1">{{header.particulars}}</td>
+                <td style="width: 150px;" class="px-1">Date Requested:</td>
+                <td style="width: 300px;" class="border-bottom border-dark px-1">{{header.date_requested}}</td>
+            </tr>
+
+            <tr>
+                <td class="px-1 align-middle">Project:</td>
+                <td style="width: 300px;" class="border-bottom border-dark px-1 text-wrap align-middle">
+                    {{header.project}}</td>
+                <td class="p-1 align-middle">Date Needed:</td>
+                {% if header.urgent %}
+                <td style="width: 300px;" class="border-bottom border-dark px-1"></td>
+                {% else %}
+                <td style="width: 300px;" class="border-bottom border-dark px-1 align-middle">{{header.date_needed}}
+                </td>
+                {% endif %}
+            </tr>
+
+            <tr>
+                <td colspan="4"></td>
+            </tr>
+        </table>
+
+        <table class="table table-bordered border-dark table-hover" style="font-size: 9pt;" id="items-table">
+            <!-- Requested Items Table Headers -->
+            <tr class="text-center fw-medium" id="table-header">
+                <td style="width: 100px; padding: 5px;">QTY</td>
+                <td style="width: 100px; padding: 5px;">UNIT</td>
+                <td style="width: 500px; padding: 5px;">DESCRIPTION</td>
+                <td style="width: 150px; padding: 5px;">UNIT COST</td>
+                <td style="width:250px; padding: 5px;">AMOUNT</td>
+            </tr>
+            <!-- Requested Items -->
+            {% for item in items %}
+            <tr>
+
+                <td class="text-center p-1">{{ item.quantity | clean_int}}</td>
+                <td class="text-center p-1">{{ item.unit }}</td>
+                <td class="p-1">{{ item.description }} {{item.item_id}}</td>
+                <td class="text-end p-1">{{ item.unit_cost|intcomma|clean_int }}</td>
+
+
+                <td class="text-end p-1">{{ item.amount | clean_int| floatformat:2 | intcomma }}</td>
+
+            </tr>
+            {% endfor %}
+            {% for field in fields %}
+            <tr>
+                <td class="text-center p-1">&nbsp;</td>
+                <td class="text-center p-1">&nbsp;</td>
+                <td class="p-1">&nbsp;</td>
+                <td class="text-end p-1">&nbsp;</td>
+                <td class="text-end p-1">&nbsp;</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td class="fs-6 fw-medium py-2 text-center">NOTE:</td>
+                <td class="fs-6 py-2 text-center"></td>
+                <td class="fs-6 fw-medium py-2 text-center">PHP</td>
+                <td class="fs-6 fw-medium py-2 text-end">{{total|floatformat:2|intcomma}}</td>
+            </tr>
+            <!-- End of Requested Items -->
+        </table>
+
+        <div class="row justify-content-center">
+            <div class="col-12 align-items-center m-0">
+                <table class="table table-borderless" style="font-size: 9pt;" id="authorized-person">
+                    <tr>
+                        <td class="position-relative">
+
+                            <p>Requested by:</p>
+                            <img class="authorized-person-img" src="/media/{{persons.Requested_by.1 }}" alt="" width="100px"
+                                class="draggable position-absolute">
+                            <p class=" indent-1">
+                                <span class="border-top border-dark px-4">{{persons.Requested_by.0}}</span>
+                            </p>
+
+                        </td>
+
+                        <td>
+                            <p>Prepared by:</p>
+                            <!-- <br> -->
+                            <img class="authorized-person-img" src="/media/{{persons.Prepared_by.1 }}" alt="" width="100px"
+                                class="draggable position-absolute">
+                            <p class="indent-1">
+                                <span class="border-top border-dark px-4">{{persons.Prepared_by.0}}</span>
+                            </p>
+                        </td>
+
+                        <td>
+                            <p>Checked by:</p>
+                            <img class="authorized-person-img" src="/media/{{persons.Checked_by.1 }}" alt="" width="100px"
+                                class="draggable position-absolute">
+                            <p class=" indent-1">
+                                <span class="border-top border-dark px-4">{{persons.Checked_by.0}}</span>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <p>Recommending Approval:</p>
+                            <img class="authorized-person-img" src="/media/{{persons.Recommending_Approval.1 }}" alt="" width="100px"
+                                class="draggable position-absolute">
+                            <p class="indent-1">
+                                <span class="border-top border-dark px-4">{{persons.Recommending_Approval.0}}</span>
+                            </p>
+                        </td>
+
+                        <td>&nbsp;</td>
+
+                        <td>
+                            <p class="text-decoration-none text-black">Approved by:</p>
+                            <img class="authorized-person-img" src="/media/{{persons.Approved_by.1 }}" alt="" width="100px"
+                                class="draggable position-absolute">
+                            <p class="indent-1">
+                                <span class="border-top border-dark px-4">{{persons.Approved_by.0}}</span>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- <ul> -->
+    <span contenteditable="true" class="fw-medium m-0 p-0" style="font-size: 9pt;">
+        F-PUR-003<br>
+        {% if title == 'Davao' %}
+        DVO
+        {% elif title == 'Cotabato' %}
+        CBT
+        {% elif title == 'Negros' %}
+        NRGO
+        {% elif title == 'Surigao' %}
+        SRGO
+        {% endif %}
+        Rev. 5-D 1/21/2024
+    </span>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#print-btn').on('click', function () {
+            window.print();
+        });
+
+    });
+
+    $(function () {
+        $('.draggable').draggable();
+    });
+    var active = document.getElementById('view-reports-nav');
+    var current = document.getElementById('side-navbar');
+    var current = current.getElementsByClassName('active');
+    current[0].className = current[0].className.replace("active", "");
+    active.className += " active";
+</script>
+{% endblock %}

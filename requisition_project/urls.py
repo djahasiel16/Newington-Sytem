@@ -26,7 +26,11 @@ urlpatterns = [
     path('surigao/', include('surigao_requests.urls')),
     path('cotabato/', include('cotabato_requests.urls')),
     path('negros/', include('negros_requests.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('authentication.urls')),
+    path('sys-settings/', include('sys_settings.urls')),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

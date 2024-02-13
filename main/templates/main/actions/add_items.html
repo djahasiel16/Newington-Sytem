@@ -1,0 +1,79 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-2">
+        <!-- <div class="fw-medium bg-secondary text-center" style="width: 30px; height: 30px; border-radius: 15px; padding: 0px;">1</div> -->
+        <a href="{% url 'davao_add_request' %}" class="fw-medium text-decoration-none text-black">
+          <i class="bi bi-1-circle"></i>
+          REQUEST HEADER
+        </a>
+      </div>
+      <div class="col-2 align-items-center">
+        <!-- <div class="fw-medium bg-secondary text-center" style="width: 30px; height: 30px; border-radius: 15px; padding: 0px;">2</div> -->
+        <a href="{% url 'davao_add_authorizedPerson' form.initial.header %}" class="fw-medium text-decoration-none text-black">
+          <i class="bi bi-2-circle"></i>
+          PERSONS
+        </a>
+      </div>
+      <div class="col align-items-center">
+        <!-- <div class="fw-medium text-white bg-primary text-center" style="width: 30px; height: 30px; border-radius: 15px; padding: 0px;">3</div> -->
+        <a href="{% url 'davao_add_items' form.initial.header %}" class="fw-medium">
+          <i class="bi bi-3-circle-fill"></i>
+          REQUEST ITEMS
+        </a>
+      </div>
+      <div class="col-9 mt-3">
+        <form method="post" class="fw-medium">
+            <h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
+                    <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2zm3.564 1.426L5.596 5 8 5.961 14.154 3.5zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z"/>
+                </svg>
+                ADD ITEMS
+            </h3>
+            <hr>
+            {% csrf_token %}
+            {{form|crispy}}
+            <button type="submit" class="btn btn-success my-4 px-4">ADD</button>
+            <a href="/{{title|lower}}/list_view_request" class="btn btn-primary my-4 px-4">FINISH</a>
+        </form>
+      </div>
+      <div class="col-3 shadow">
+        <h3 class="text-center">Items</h3><hr>
+        <ul class="list-group">
+            {% for item in items %}
+            {% if item.served %}
+            <li class="list-group-item">
+              <input type="checkbox" checked style="pointer-events: none;">
+              <a href="/{{title|lower}}/edit_item/{{item.id}}/" class="text-decoration-none text-black wrap-text">{{item.description}} {{item.item_id}}</a>
+            </li>
+            {% else %}
+            <li class="list-group-item">
+              <input type="checkbox" style="pointer-events: none;">
+              <a href="/{{title|lower}}/edit_item/{{item.id}}/" class="text-decoration-none text-black">{{item.description}} {{item.item_id}}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+</div>
+
+    
+
+
+<script>
+    $(document).ready(function() {
+        // Event handlers for 'input' events on #qty and #unit_cost
+        $('#qty, #unit_cost').on('input', function(){
+            var qtyValue = parseInt($('#qty').val()) || 0;
+            var unitCostValue = parseInt($('#unit_cost').val()) || 0;
+            
+            var rs = qtyValue * unitCostValue;
+            $('#amount').val(rs);
+        });
+    });
+
+</script>
+{% endblock %}

@@ -1,14 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
-def dashboard(request):
-    return render(request, 'main/dashboard.html')
-
-
-def dynamic_url(request):
-    try:
-        url = request.META['HTTP_REFERER']
-        url = '/'.join(url.split('/')[2:4])
-        
-    except:
-        pass
+def home(request):
+    if request.user.is_authenticated:
+        return render(request, 'main/home.html')
+    else:
+        return redirect('login')

@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import DavaoRequestHeader, DavaoRequestItems, AuthorizedPersons
+from .models import DavaoRequestHeader, DavaoRequestItems, AuthorizedPersons, Monitoring, Persons
 
+var_models = DavaoRequestHeader, DavaoRequestItems, AuthorizedPersons, Monitoring, Persons
 # Register your models here.
-admin.site.register(DavaoRequestHeader)
-admin.site.register(DavaoRequestItems)
-admin.site.register(AuthorizedPersons)
+for var_model in var_models:
+    admin.site.register(var_model)

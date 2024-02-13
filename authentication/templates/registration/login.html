@@ -1,0 +1,15 @@
+{% extends 'registration/base.html' %}
+{% load static %}
+
+{% block content%}
+<div class="col-3">
+    <form method="post" class="form-control p-4 shadow">
+        <img src="{% static 'authentication/logo.png' %}" alt="logo.png" width="300px" class="img-fluid" mb-3>
+        <h3 class="pt-3"></h3>
+        {% load crispy_forms_tags %}
+        {% csrf_token %}
+        {{form|crispy}}
+        <button class="btn btn-success my-3">Login</button>
+    </form>
+</div>
+{% endblock%}

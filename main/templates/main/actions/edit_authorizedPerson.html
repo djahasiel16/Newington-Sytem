@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+{% block title %} Add Authorized Persons {% endblock %}
+{% load crispy_forms_tags %}
+
+{%  block content %}
+    
+<form method="post" class="form-control shadow" enctype="multipart/form-data">
+    <h1>Update Authorized Person</h1>
+    {% csrf_token %}
+    {{form|crispy}}
+    <button type="submit" class="btn btn-success my-3">Update</button>
+</form>
+
+{% endblock %}

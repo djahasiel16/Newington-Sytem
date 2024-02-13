@@ -1,0 +1,93 @@
+{% extends 'main/base.html' %}
+
+{% block content-title %}
+Authorized Persons
+{% endblock %}
+{% block content %}
+
+<div class="table-responsive small rounded shadow p-3 mb-3">
+    <table class="table table-striped table-sm table-hover" id="person-data-table">
+        <thead>
+            <th>RS Number</th>
+            <th>Title</th>
+            <th>Name</th>
+            <th class="text-center">Signed</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for person in persons %}
+            <tr>
+                <td>{{person.header.rs_number}}</td>
+                <td>{{person.title}}</td>
+                <td>{{person.name}}</td>
+                <td class="text-center">
+                    {% if person.signature %}
+                    Signed
+                    {% else %}
+                    Unsigned
+                    {% endif %}
+                </td>
+                <td class="text-end">
+                    <button role="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#person{{person.id}}">
+                        <i class="bi bi-pencil-fill"></i>
+                        Edit
+                        <span class="visually-hidden">Button</span>
+                    </button>
+
+                    <button onclick="confirmDelete('{{ person.name }}')" role="button"
+                        class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-trash3-fill"></i>
+                        Delete
+                        <span class="visually-hidden">Button</span>
+                    </button>
+                    <script>
+                        function confirmDelete(info) {
+                            if (confirm("Are you sure you want to delete " + info + "?")) {
+                                window.location.href = "{% url 'davao_delete_person' person.id %}";
+                            } else {
+                                // Do nothing or provide feedback to the user that the delete action was canceled.
+                            }
+                        }
+                    </script>
+                </td>
+            </tr>
+
+            <!-- Modal -->
+            <div class="modal fade" id="person{{person.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Authorized Person</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="{% url 'davao_edit_authorizedPerson' person.id %}">
+                            <div class="modal-body calculation-form">
+                                {% load davao_tags %}
+                                {% editPersonModal person.id %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#person-data-table").DataTable();
+    });
+    var active = document.getElementById('persons-nav');
+    var current = document.getElementById('side-navbar');
+    var current = current.getElementsByClassName('active');
+    current[0].className = current[0].className.replace("active", "");
+    active.className += " active";
+</script>
+{% endblock %}

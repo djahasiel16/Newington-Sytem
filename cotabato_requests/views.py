@@ -67,7 +67,7 @@ def add_authorizedPerson_view(request, rs_number):
         if form.is_valid:
             form.save()
             messages.success(request, "Person Added Successfully")
-            return redirect(reverse(add_authorizedPerson_view, kwargs={'rs_number':rs_number}))
+            return redirect(reverse('cotabato_add_authorizedPerson', kwargs={'rs_number':rs_number}))
         
     form = AuthorizedPersonsForm(initial=init_data)
     return render(request, 'main/actions/add_authorizedPerson.html', {'form':form, 'title':'Cotabato'})

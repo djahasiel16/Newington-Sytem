@@ -1,0 +1,23 @@
+
+#monitoring-table {
+    width: 1500px;
+    font-size: 10px;
+}
+.particulars_col, .description_col {
+    width: 600px;
+}
+
+.rs_no_col, .rs_date_col, .po_date_col {
+    width: 100px;
+}
+
+.supplier_col {
+    width: 600px;
+}
+
+.scrollable {
+    /* width: 130%;
+    height: 100%; */
+    overflow: scroll;
+    /* background-color: gray; */
+}

@@ -1,0 +1,225 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content-title %}{{title|upper}} MONITORING{% endblock %}
+{% block content %}
+<!-- <link rel="stylesheet" href="{% static 'main/css/style.css' %}"> -->
+<style>
+    #monitoring-table {
+        width: 1500px;
+        font-size: 10px;
+    }
+
+    .particulars_col,
+    .description_col {
+        width: 600px;
+    }
+
+    .rs_no_col,
+    .rs_date_col,
+    .po_date_col {
+        width: 100px;
+    }
+
+    .supplier_col {
+        width: 800px;
+    }
+
+    .scrollable {
+        /* width: 130%;
+    height: 100%; */
+        overflow: scroll;
+        /* background-color: gray; */
+    }
+</style>
+<div class="scrollable" style="width: 100%">
+    <div class="row p-0 m-0">
+        <p>Show/Hide Columns</p>
+        <div class="col">
+            <input type="checkbox" name="rs-label" id="rs_no_col">
+            <label for="rs-label">R.S. NO</label>
+        </div>
+
+        <div class="col">
+            <input type="checkbox" name="rs-date-label" id="rs_date_col">
+            <label for="rs-date-label">R.S. Date</label>
+        </div>
+
+        <div class="col">
+            <input type="checkbox" name="po-date-label" id="po_date_col">
+            <label for="po-date-label">P.O. Date</label>
+        </div>
+
+        <div class="col">
+            <input type="checkbox" name="dr-label" id="dr_no_col">
+            <label for="dr-label">DR</label>
+        </div>
+
+        <div class="col">
+            <input type="checkbox" name="supplier-label" id="supplier_col">
+            <label for="supplier-label">Supplier</label>
+        </div>
+
+        <div class="col">
+            <input type="checkbox" name="description-label" id="description_col">
+            <label for="description-label">Description</label>
+        </div>
+
+        <div class="col">
+            <input type="checkbox" name="particulars-label" id="particulars_col">
+            <label for="particulars-label">Particulars</label>
+        </div>
+
+        <div class="col">
+            <input type="checkbox" name="unit-label" id="unit_col">
+            <label for="unit-label">Unit</label>
+        </div>
+        
+        <hr>
+    </div>
+    <table id="monitoring-table" class="table table-sm text-center table-striped table-hover" style="font-size: 9pt;">
+        <thead>
+            <th class="rs_no_col align-middle" style="display: none;">RS NO.</th>
+            <th class="rs_date_col align-middle" style="display: none;">RS DATE</th>
+            <th class="po_no_col align-middle">PO NO.</th>
+            <th class="po_date_col align-middle" style="display: none;">PO DATE</th>
+            <th class="project_id_col align-middle">Project I.D.</th>
+            <th class="supplier_col align-middle align-middle" style="display: none;">SUPPLIER</th>
+            <th class="description_col align-middle" style="display: none;">DESCRIPTION</th>
+            <th class="po_qty_col align-middle">PO QTY</th>
+            <th class="unit_col align-middle" style="display: none;">UNIT</th>
+            <th class="unit_price_col align-middle">UNIT PRICE</th>
+            <th class="total_amount_col align-middle">TOTAL AMOUNT</th>
+            <th class="particulars_col align-middle" style="display: none;">PARTICULARS<br>REMARKS</th>
+            <th class="delivery_date_col align-middle">DELIVERY DATE</th>
+            <th class="receiving_report_col align-middle">RECEIVING REPORT</th>
+            <th class="dr_no_col align-middle" style="display: none;">D.R. NO.</th>
+            <th class="si_no_col align-middle">S.I. NO.</th>
+            <th class="or_on_col align-middle">O.R. NO.</th>
+            <th class="cr_no_col align-middle">C.R. NO.</th>
+            <th class="withdrawal_no_col align-middle">WITHDRAWAL NO.</th>
+            <th class="date_col align-middle">DATE</th>
+            <th class="reference_col align-middle">REFERENCE</th>
+            <th class="served_col align-middle">SERVED<br>UNSERVED</th>
+        </thead>
+        <tbody>
+            {% for d in data %}
+            {% load davao_tags %}
+            {% if not d.header.ignore %}
+            <tr>
+                <td class="rs_no_col align-middle" style="display: none;">{{d.header.header.rs_number}}</td>
+                <td class="rs_date_col align-middle" style="display: none;">{{d.header.header.date_requested}}</td>
+                <td class="po_no_col align-middle">{{d.PO_no|clean_empty}}</td>
+                <td class="po_date_col align-middle" style="display: none;">{{d.PO_date|clean_empty}}</td>
+                <td class="project_id_col align-middle">
+                    {{d.header.item_id|clean_empty}}
+                </td>
+                <td class="supplier_col align-middle" style="display: none;">{{d.header.header.payee}}</td>
+                <td class="description_col align-middle" style="display: none;">{{d.header.description}}</td>
+                <td class="po_qty_col align-middle">{{d.header.quantity}}</td>
+                <td class="unit_col align-middle" style="display: none;">{{d.header.unit}}</td>
+                <td class="unit_price_col align-middle">{{d.header.unit_cost|intcomma}}</td>
+                <td class="total_amount_col align-middle">₱{{d.header.amount|intcomma}}</td>
+                <td class="particulars_col align-middle" style="display: none;">{{d.header.header.particulars}}</td>
+                <td class="delivery_date_col align-middle">
+                    <span role="button" data-bs-toggle="modal" data-bs-target="#monitoring-update-form{{d.id}}">
+                        {{d.delivery_date|clean_empty}}
+                    </span>
+                </td>
+                <td class="receiving_report_col align-middle">{{d.receiving_report|clean_empty}}</td>
+                <td class="dr_no_col align-middle" style="display: none;">--</td>
+                <td class="si_no_col align-middle">{{d.si_no|clean_empty}}</td>
+                <td class="or_on_col align-middle">{{d.or_no|clean_empty}}</td>
+                <td class="cr_no_col align-middle">{{d.cr_no|clean_empty}}</td>
+                <td class="withdrawal_no_col align-middle">{{d.withdrawal_no|clean_empty}}</td>
+                <td class="date_col align-middle">{{d.item_date|clean_empty}}</td>
+                <td class="reference_col align-middle">{{d.reference|clean_empty}}</td>
+                <td class="served_col align-middle">
+                    {% if d.header.served %}
+                    <i class="bi bi-check-circle-fill text-success">
+                        <p style="display: none;">a</p>
+                    </i>
+                    {% else %}
+                    <i class="bi bi-x-circle-fill text-danger">
+                        <p style="display: none;">b</p>
+                    </i>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endif %}
+            <!-- Modal -->
+            <div class="modal fade" id="monitoring-update-form{{d.id}}" tabindex="-1"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">{{d.header.header.rs_number}}</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="post" action="/{{title|lower}}/monitoringForm/">
+                            <div class="modal-body" id="monitoring-modal">
+                                {% monitoringModalForm d.id %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-dark">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).on('submit', '#monitoringForm', function (e) {
+        e.preventDefault();
+    });
+
+    let classes = [
+        "rs_no_col", "rs_date_col", "po_no_col", "po_date_col",
+        "project_id_col", "supplier_col", "description_col", "po_qty_col",
+        "unit_col", "unit_price_col", "total_amount_col", "particulars_col",
+        "delivery_date_col", "receiving_report_col", "dr_no_col", "si_no_col",
+        "or_on_col", "cr_no_col", "withdrawal_no_col", "date_col", "reference_col",
+        "served_col"
+    ]
+
+    for (let i = 0; i < classes.length; i++) {
+        $(function () {
+            $("#" + classes[i]).change(function () {
+                var isChecked = $(this).is(':checked');
+                if (isChecked) {
+                    $('.' + classes[i]).show();
+                } else {
+                    $('.' + classes[i]).hide();
+                }
+
+            });
+        });
+    }
+
+</script>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('.table').DataTable();
+        $('#id_urgent').change(function () {
+            var checked = $(this).is(':checked');
+            if (checked) {
+                // alert('Checked')
+            } else {
+                // alert('Unchecked')
+            }
+        })
+    });
+</script>
+
+{% endblock %}

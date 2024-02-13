@@ -1,0 +1,58 @@
+{% extends 'main/base.html' %}
+{% block title %} Add Authorized Persons {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row justify-content-start align-items-center">
+    <div class="col-2 align-items-center">
+        <!-- <div class="fw-medium text-tertiary bg-secondary text-center"
+            style="width: 30px; height: 30px; border-radius: 15px; padding: 0px;">1</div> -->
+        <a href="{% url 'davao_edit_request_view' form.initial.header.rs_number %}" class="fw-medium text-decoration-none text-black">
+            <i class="bi bi-1-circle"></i>
+            REQUEST HEADER
+        </a>
+    </div>
+    <div class="col-2 align-items-center">
+        <!-- <div class="fw-medium bg-primary text-white text-center"
+            style="width: 30px; height: 30px; border-radius: 15px; padding: 0px;">2</div> -->
+            <i class="bi bi-2-circle-fill text-primary"></i>
+        <a href="{% url 'davao_add_authorizedPerson' form.initial.header.rs_number %}" class="fw-medium">PERSONS</a>
+    </div>
+    <div class="col-2 align-items-center">
+        <!-- <div class="fw-medium text-tertiary bg-secondary text-center"
+            style="width: 30px; height: 30px; border-radius: 15px; padding: 0px;">3</div> -->
+            <i class="bi bi-3-circle"></i>
+        <a href="{% url 'davao_add_items' form.initial.header.rs_number %}"
+            class="fw-medium text-decoration-none text-black">REQUEST ITEMS</a>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <form method="post" class="form-control shadow" enctype="multipart/form-data">
+            <h1>Add Authorized Person</h1>
+            {% csrf_token %}
+            {{form|crispy}}
+            <button type="submit" class="btn btn-primary my-3">ADD</button>
+
+        </form>
+    </div>
+
+    <div class="col shadow rounded">
+        <h1>Added Person</h1>
+        <table class="table">
+            <thead class="fs-6">
+                <th>Name</th>
+                <th>Title</th>
+            </thead>
+            <tbody>
+                {% for person in persons %}
+                <tr>
+                    <td>{{person.name}}</td>
+                    <td>{{person.title}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

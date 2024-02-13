@@ -1,0 +1,131 @@
+{% extends 'main/base.html' %}
+
+{% block content-title %} Requested Items for {{data.0.header.rs_number}} {% endblock %}
+{% block content %}
+{% load humanize %}
+<button type="button" class="btn btn-dark my-3" data-bs-toggle="modal"
+    data-bs-target="#item{{data.0.header.rs_number}}">Add Item</button>
+<table class="table table-sm text-center table-striped table-hover" id="request-items-table" style="font-size: 9pt;">
+    <thead>
+        <th>RS NO</th>
+        <th>ITEM ID</th>
+        <th>DESCRIPTION</th>
+        <th>QUANTITY</th>
+        <th>UNIT</th>
+        <th>UNIT COST</th>
+        <th>AMOUNT</th>
+        <th>STATUS</th>
+        <th></th>
+    </thead>
+    <tbody>
+        {% for d in data %}
+        {% if not d.ignore %}
+        <tr>
+            <td>{{d.header.rs_number}}</td>
+            <td>{{d.item_id}}</td>
+            <td>{{d.description}}</td>
+            <td>{{d.quantity}}</td>
+            <td>{{d.unit}}</td>
+            <td>{{d.unit_cost}}</td>
+            <td>{{d.amount|intcomma}}</td>
+            <td>
+                {% if d.served %}
+                Served
+                {% else %}
+                Unserved
+                {% endif %}
+            </td>
+            <td>
+                <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#edit-item{{d.id}}">Update Item</button>
+            </td>
+        </tr>
+
+        <!-- Modal for Editing Item -->
+        <div class="modal fade" id="edit-item{{d.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Item</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{% url 'davao_edit_item_view' d.id %}" method="post" id="editItemModal{{d.id}}">
+                        <div class="modal-body calculation-form">
+                            {% load davao_tags %}
+                            {% editItemModal d.id %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-dark">Save changes</button>
+                        </div>
+                        <!-- <script>
+                            $(document).ready(function () {
+                                // Event handlers for 'input' events on #qty and #unit_cost
+                                $('.calculation-form').on('input', '.quantity, .unit_cost', function () {
+                                    var form = $(this).closest('.calculation-form');
+                                    var qtyValue = parseInt(form.find('.quantity').val()) || 0;
+                                    var unitCostValue = parseInt(form.find('.unit_cost').val()) || 0;
+
+                                    var rs = qtyValue * unitCostValue;
+                                    form.find('.amount').val(rs);
+                                });
+                            });
+                        </script> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal for Adding Item -->
+        <div class="modal fade" id="item{{data.0.header.rs_number}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{d.header.payee}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{% url 'davao_addRequest_items' data.0.header.rs_number %}" method="post">
+                        <div class="modal-body calculation-form">
+                            {% load davao_tags %}
+                            {% addItemsModal data.0.header.rs_number %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-dark">Save changes</button>
+                        </div>
+                        <!-- <script>
+                            $(document).ready(function () {
+                                // Event handlers for 'input' events on #qty and #unit_cost
+                                $('#qty, #unit_cost').on('input', function () {
+                                    var qtyValue = parseInt($('#qty').val()) || 0;
+                                    var unitCostValue = parseInt($('#unit_cost').val()) || 0;
+
+                                    var rs = qtyValue * unitCostValue;
+                                    $('#amount').val(rs);
+                                });
+                            });
+                        </script> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    $(function () {
+        $('#request-items-table').DataTable();
+    });
+
+    var active = document.getElementById('items-nav');
+    var current = document.getElementById('side-navbar');
+    var current = current.getElementsByClassName('active');
+    current[0].className = current[0].className.replace("active", "");
+
+</script>
+{% endblock %}

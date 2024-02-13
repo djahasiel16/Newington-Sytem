@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-$5%_p5=2$bt9d@*g&m0q0j!dd$u#)ailj9_&4^6=^2e$riix+u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,11 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'main',
+    'authentication',
     'davao_requests',
     'surigao_requests',
     'cotabato_requests',
     'negros_requests',
+    'sys_settings',
     'crispy_forms',
     'crispy_bootstrap4',
     'bootstrap_datepicker_plus'
@@ -134,3 +137,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+LOGIN_REDIRECT_URL = '/davao/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
