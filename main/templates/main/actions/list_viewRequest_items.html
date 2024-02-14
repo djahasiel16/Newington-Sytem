@@ -1,10 +1,11 @@
 {% extends 'main/base.html' %}
 
-{% block content-title %} Requested Items for {{data.0.header.rs_number}} {% endblock %}
+{% block content-title %} Requested Items for {{rs_header.rs_number}} {% endblock %}
 {% block content %}
 {% load humanize %}
+
 <button type="button" class="btn btn-dark my-3" data-bs-toggle="modal"
-    data-bs-target="#item{{data.0.header.rs_number}}">Add Item</button>
+    data-bs-target="#item{{rs_header.rs_number}}">Add Item</button>
 <table class="table table-sm text-center table-striped table-hover" id="request-items-table" style="font-size: 9pt;">
     <thead>
         <th>RS NO</th>
@@ -50,6 +51,8 @@
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Update Item</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <!-- "{% url 'davao_edit_item_view' d.id %}" -->
+                    {% if title == 'Davao' %}
                     <form action="{% url 'davao_edit_item_view' d.id %}" method="post" id="editItemModal{{d.id}}">
                         <div class="modal-body calculation-form">
                             {% load davao_tags %}
@@ -59,61 +62,61 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-dark">Save changes</button>
                         </div>
-                        <!-- <script>
-                            $(document).ready(function () {
-                                // Event handlers for 'input' events on #qty and #unit_cost
-                                $('.calculation-form').on('input', '.quantity, .unit_cost', function () {
-                                    var form = $(this).closest('.calculation-form');
-                                    var qtyValue = parseInt(form.find('.quantity').val()) || 0;
-                                    var unitCostValue = parseInt(form.find('.unit_cost').val()) || 0;
-
-                                    var rs = qtyValue * unitCostValue;
-                                    form.find('.amount').val(rs);
-                                });
-                            });
-                        </script> -->
                     </form>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Modal for Adding Item -->
-        <div class="modal fade" id="item{{data.0.header.rs_number}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{d.header.payee}}</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="{% url 'davao_addRequest_items' data.0.header.rs_number %}" method="post">
+                    {% elif title == 'Cotabato' %}
+                    <form action="{% url 'cotabato_edit_item_view' d.id %}" method="post" id="editItemModal{{d.id}}">
                         <div class="modal-body calculation-form">
-                            {% load davao_tags %}
-                            {% addItemsModal data.0.header.rs_number %}
+                            {% load cotabato_tags %}
+                            {% editItemModal d.id %}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-dark">Save changes</button>
                         </div>
-                        <!-- <script>
-                            $(document).ready(function () {
-                                // Event handlers for 'input' events on #qty and #unit_cost
-                                $('#qty, #unit_cost').on('input', function () {
-                                    var qtyValue = parseInt($('#qty').val()) || 0;
-                                    var unitCostValue = parseInt($('#unit_cost').val()) || 0;
-
-                                    var rs = qtyValue * unitCostValue;
-                                    $('#amount').val(rs);
-                                });
-                            });
-                        </script> -->
                     </form>
+                    {% endif %}
                 </div>
             </div>
         </div>
+
         {% endif %}
         {% endfor %}
+
+        <!-- Modal for Adding Item -->
+        <div class="modal fade" id="item{{rs_header.rs_number}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{rs_header.payee}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    {% if title == 'Davao' %}
+                    <form action="{% url 'davao_addRequest_items' rs_header.rs_number %}" method="post">
+                        <div class="modal-body calculation-form">
+                            {% addItemsModal rs_header.rs_number %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-dark">Save changes</button>
+                        </div>
+                    </form>
+                    {% elif title == 'Cotabato' %}
+                    <form action="{% url 'cotabato_addRequest_items' rs_header.rs_number %}" method="post">
+                        <div class="modal-body calculation-form">
+                            {% load cotabato_tags %}
+                            {% addItemsModal rs_header.rs_number %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-dark">Save changes</button>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- End of Adding Modal -->
     </tbody>
 </table>
 

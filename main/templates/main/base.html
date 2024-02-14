@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.118.2">
-    <title>{% block title %}Newington Builders Inc.{% endblock %}</title>
+    <title>{% block title %}Newington - {{title}} {% endblock %}</title>
 
     <link href="{% static 'main/css/dashboard.css' %}" rel="stylesheet">
 
@@ -270,7 +270,7 @@
                     {% endif %}
                     <h1 class="h2">{% block content-title %}{{title}}{% endblock %}</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        {% if title == 'Davao' %}
+                        {# {% if title == 'Davao' %} #}
 
                         <!-- Modal Feature -->
                         <div class="mx-2">
@@ -298,7 +298,11 @@
                                         <form method="post" action="/{{title|lower}}/add_request/">
                                             <div class="modal-body">
 
+                                                {% if title == 'Davao' %}
                                                 {% load davao_tags %}
+                                                {% elif title == 'Cotabato' %}
+                                                {% load cotabato_tags %}
+                                                {% endif %}
                                                 {% renderAddRequestForm %}
 
                                             </div>
@@ -312,10 +316,9 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- End of Modal feature -->
 
-                        {% endif %}
+                        {# {% endif #%} #}
                     </div>
                 </div>
                 {% block content %}

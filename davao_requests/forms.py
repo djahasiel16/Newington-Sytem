@@ -96,17 +96,6 @@ class DavaoRequestAddItemsForm(forms.ModelForm):
             'unit_cost':forms.NumberInput(attrs={'class':'form-control unit_cost', 'id':'unit_cost'}),
             'amount':forms.NumberInput(attrs={'class':'form-control amount amnt', 'id':'amount'}),
         }
-        
-        # widgets = {
-        #     'header':forms.TextInput(attrs={'class':'form-control', 'readonly':''}),
-        #     'item_id':forms.TextInput(attrs={'class':'form-control'}),
-        #     'ignore':forms.CheckboxInput(attrs={'class':'from-control'}),
-        #     'description':forms.TextInput(attrs={'class':'form-control'}),
-        #     'quantity':forms.NumberInput(attrs={'class':'form-control'}),
-        #     'unit':forms.TextInput(attrs={'class':'form-control'}),
-        #     'unit_cost':forms.NumberInput(attrs={'class':'form-control'}),
-        #     'amount':forms.NumberInput(attrs={'class':'form-control'}),
-        # }
 
 class PersonsChoicesField(forms.ModelChoiceField):
     def labels_from_instance(self, obj):

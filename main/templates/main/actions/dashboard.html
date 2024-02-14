@@ -1,9 +1,14 @@
 {% extends 'main/base.html' %}
 {% load static %}
+
 {% load humanize %}
+
 {% block content-title %}{{title|upper}} MONITORING{% endblock %}
+
 {% block content %}
-<!-- <link rel="stylesheet" href="{% static 'main/css/style.css' %}"> -->
+{% load maintags %}
+
+
 <style>
     #monitoring-table {
         width: 1500px;
@@ -74,10 +79,10 @@
             <input type="checkbox" name="unit-label" id="unit_col">
             <label for="unit-label">Unit</label>
         </div>
-        
+
         <hr>
     </div>
-    <table id="monitoring-table" class="table table-sm text-center table-striped table-hover" style="font-size: 9pt;">
+    <table id="monitoring-table" class="table table-lg text-center table-striped table-hover" style="font-size: 7pt;">
         <thead>
             <th class="rs_no_col align-middle" style="display: none;">RS NO.</th>
             <th class="rs_date_col align-middle" style="display: none;">RS DATE</th>
@@ -104,7 +109,6 @@
         </thead>
         <tbody>
             {% for d in data %}
-            {% load davao_tags %}
             {% if not d.header.ignore %}
             <tr>
                 <td class="rs_no_col align-middle" style="display: none;">{{d.header.header.rs_number}}</td>
@@ -127,10 +131,10 @@
                     </span>
                 </td>
                 <td class="receiving_report_col align-middle">{{d.receiving_report|clean_empty}}</td>
-                <td class="dr_no_col align-middle" style="display: none;">--</td>
-                <td class="si_no_col align-middle">{{d.si_no|clean_empty}}</td>
-                <td class="or_on_col align-middle">{{d.or_no|clean_empty}}</td>
-                <td class="cr_no_col align-middle">{{d.cr_no|clean_empty}}</td>
+                <td class="dr_no_col align-middle" style="display: none;">{{d.DR_no|clean_empty}}</td>
+                <td class="si_no_col align-middle">{{d.SI_no|clean_empty}}</td>
+                <td class="or_on_col align-middle">{{d.OR_no|clean_empty}}</td>
+                <td class="cr_no_col align-middle">{{d.CR_no|clean_empty}}</td>
                 <td class="withdrawal_no_col align-middle">{{d.withdrawal_no|clean_empty}}</td>
                 <td class="date_col align-middle">{{d.item_date|clean_empty}}</td>
                 <td class="reference_col align-middle">{{d.reference|clean_empty}}</td>
@@ -160,7 +164,15 @@
                         </div>
                         <form method="post" action="/{{title|lower}}/monitoringForm/">
                             <div class="modal-body" id="monitoring-modal">
+                                {% if title == 'Davao' %}
+                                {% load davao_tags %}
                                 {% monitoringModalForm d.id %}
+                                {% elif title == 'Cotabato' %}
+                                {% load cotabato_tags %}
+                                {% monitoringModalForm d.id %}
+                                {% endif %}
+
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -176,6 +188,7 @@
         </tbody>
     </table>
 </div>
+
 
 <script>
     $(document).on('submit', '#monitoringForm', function (e) {

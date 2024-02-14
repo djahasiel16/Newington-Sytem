@@ -249,7 +249,8 @@ def list_view_items(request):
 
 def list_viewRequest_items(request, rs_number):
     items = DavaoRequestItems.objects.filter(header=DavaoRequestHeader.objects.get(pk=rs_number))
-    return render(request, 'main/actions/list_viewRequest_items.html', {'data':items, 'title':'Davao'})
+    rs = DavaoRequestHeader.objects.get(pk=rs_number)
+    return render(request, 'main/actions/list_viewRequest_items.html', {'data':items, 'rs_header':rs,'title':'Davao'})
 
 def go_back(request):
     if request.user.is_authenticated:

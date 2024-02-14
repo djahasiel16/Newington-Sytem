@@ -11,3 +11,10 @@ def clean_int(value):
             return value
     except ValueError:
         return value
+
+@register.filter(name='clean_empty')
+def clean_empty(value):
+    if value == '' or not value:
+        return "--"
+    else:
+        return value

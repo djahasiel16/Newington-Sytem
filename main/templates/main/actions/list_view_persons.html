@@ -41,6 +41,7 @@ Authorized Persons
                         Delete
                         <span class="visually-hidden">Button</span>
                     </button>
+                    {% if title == 'Davao' %}
                     <script>
                         function confirmDelete(info) {
                             if (confirm("Are you sure you want to delete " + info + "?")) {
@@ -50,6 +51,17 @@ Authorized Persons
                             }
                         }
                     </script>
+                    {% elif title == 'Cotabato' %}
+                    <script>
+                        function confirmDelete(info) {
+                            if (confirm("Are you sure you want to delete " + info + "?")) {
+                                window.location.href = "{% url 'cotabato_delete_person' person.id %}";
+                            } else {
+                                // Do nothing or provide feedback to the user that the delete action was canceled.
+                            }
+                        }
+                    </script>
+                    {% endif %}
                 </td>
             </tr>
 
@@ -62,7 +74,9 @@ Authorized Persons
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Authorized Person</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="{% url 'davao_edit_authorizedPerson' person.id %}">
+                        {% if title == 'Davao' %}
+                        <form action="{% url 'davao_edit_authorizedPerson' person.id %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
                             <div class="modal-body calculation-form">
                                 {% load davao_tags %}
                                 {% editPersonModal person.id %}
@@ -72,6 +86,19 @@ Authorized Persons
                                 <button type="submit" class="btn btn-primary">Save changes</button>
                             </div>
                         </form>
+                        {% elif title == 'Cotabato' %}
+                        <form action="{% url 'cotabato_edit_authorizedPerson' person.id %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body calculation-form">
+                                {% load cotabato_tags %}
+                                {% editPersonModal person.id %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                        {% endif %}
                     </div>
                 </div>
             </div>
