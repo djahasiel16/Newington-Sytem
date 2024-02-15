@@ -16,16 +16,27 @@
     }
 
     .particulars_col,
-    .description_col {
+    .description_col,
+    .receiving_report_col {
         width: 600px;
     }
 
+    .withdrawal_no_col {
+        width: 200px;
+    }
     .rs_no_col,
     .rs_date_col,
-    .po_date_col {
+    .po_date_col,
+    .date_col,
+    .or_on_col,
+    .si_no_col,
+    .cr_no_col {
         width: 100px;
     }
 
+    .delivery_date_col {
+        width: 150px;
+    }
     .supplier_col {
         width: 800px;
     }
@@ -164,14 +175,24 @@
                         </div>
                         <form method="post" action="/{{title|lower}}/monitoringForm/">
                             <div class="modal-body" id="monitoring-modal">
+
                                 {% if title == 'Davao' %}
                                 {% load davao_tags %}
                                 {% monitoringModalForm d.id %}
+
                                 {% elif title == 'Cotabato' %}
                                 {% load cotabato_tags %}
                                 {% monitoringModalForm d.id %}
-                                {% endif %}
+                                
+                                {% elif title == 'Negros' %}
+                                {% load negros_tags %}
+                                {% monitoringModalForm d.id %}
 
+                                {% elif title == 'Surigao' %}
+                                {% load surigao_tags %}
+                                {% monitoringModalForm d.id %}
+
+                                {% endif %}
 
                             </div>
                             <div class="modal-footer">

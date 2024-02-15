@@ -40,8 +40,8 @@ class AuthorizedPersons(models.Model):
     title = models.CharField(max_length=30)
     signature = models.ImageField(upload_to='signatures/', blank=True)
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
 
 class Persons(models.Model):
     name = models.CharField(max_length=53)

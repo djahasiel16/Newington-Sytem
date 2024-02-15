@@ -14,27 +14,42 @@
         </thead>
         <tbody>
             {% for r in req %}
-            {% if title == 'Davao' %}
             <tr>
                 <td>{{r.rs_number}}</td>
                 <td>{{r.particulars}}</td>
                 <td>{{r.payee}}</td>
                 <td class="text-center">
+                    {% if title == 'Davao' %}
                     <a href="{% url 'davao_rsView' r.rs_number %}" role="button"
                         class="btn btn-outline-dark btn-sm">
                         <i class="bi bi-printer-fill"></i>
                         <span class="visually-hidden">Button</span>
                         Preview
                     </a>
+                    {% elif title == 'Cotabato' %}
+                    <a href="{% url 'cotabato_rsView' r.rs_number %}" role="button"
+                        class="btn btn-outline-dark btn-sm">
+                        <i class="bi bi-printer-fill"></i>
+                        <span class="visually-hidden">Button</span>
+                        Preview
+                    </a>
+                    {% elif title == 'Negros' %}
+                    <a href="{% url 'negros_rsView' r.rs_number %}" role="button"
+                        class="btn btn-outline-dark btn-sm">
+                        <i class="bi bi-printer-fill"></i>
+                        <span class="visually-hidden">Button</span>
+                        Preview
+                    </a>
+                    {% elif title == 'Surigao' %}
+                    <a href="{% url 'surigao_rsView' r.rs_number %}" role="button"
+                        class="btn btn-outline-dark btn-sm">
+                        <i class="bi bi-printer-fill"></i>
+                        <span class="visually-hidden">Button</span>
+                        Preview
+                    </a>
+                    {% endif %}
                 </td>
             </tr>
-            {% elif title == 'Cotabato' %}
-            
-            {% elif title == 'Negros' %}
-            
-            {% elif title == 'Surigao' %}
-            
-            {% endif %}
             {% endfor %}
         </tbody>
     </table>

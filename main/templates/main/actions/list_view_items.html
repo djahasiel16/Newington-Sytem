@@ -32,6 +32,14 @@
                     <a href="{% url 'cotabato_rsView' item.header.rs_number %}" class="text-decoration-none text-none">
                         {{item.header.rs_number}}
                     </a>
+                    {% elif title == 'Negros' %}
+                    <a href="{% url 'negros_rsView' item.header.rs_number %}" class="text-decoration-none text-none">
+                        {{item.header.rs_number}}
+                    </a>
+                    {% elif title == 'Surigao' %}
+                    <a href="{% url 'surigao_rsView' item.header.rs_number %}" class="text-decoration-none text-none">
+                        {{item.header.rs_number}}
+                    </a>
                     {% endif %}
                 </td>
                 <td>{{item.description}} {{item.item_id}}</td>
@@ -79,6 +87,26 @@
                             }
                         }
                     </script>
+                    {% elif title == 'Negros' %}
+                    <script>
+                        function confirmDelete(item_id, info) {
+                            if (confirm("Are you sure you want to delete request item " + info + "?")) {
+                                window.location.href = "{% url 'negros_delete_item' item.id %}";
+                            } else {
+                                // Do nothing or provide feedback to the user that the delete action was canceled.
+                            }
+                        }
+                    </script>
+                    {% elif title == 'Surigao' %}
+                    <script>
+                        function confirmDelete(item_id, info) {
+                            if (confirm("Are you sure you want to delete request item " + info + "?")) {
+                                window.location.href = "{% url 'surigao_delete_item' item.id %}";
+                            } else {
+                                // Do nothing or provide feedback to the user that the delete action was canceled.
+                            }
+                        }
+                    </script>
                     {% endif %}
                 </td>
             </tr>
@@ -107,6 +135,30 @@
                         <form action="{% url 'cotabato_edit_item_view' item.id %}" method="post">
                             <div class="modal-body calculation-form">
                                 {% load cotabato_tags %}
+                                {% csrf_token %}
+                                {% editItemsModal item.id %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-dark">Save changes</button>
+                            </div>
+                        </form>
+                        {% elif title == 'Negros' %}
+                        <form action="{% url 'negros_edit_item_view' item.id %}" method="post">
+                            <div class="modal-body calculation-form">
+                                {% load negros_tags %}
+                                {% csrf_token %}
+                                {% editItemsModal item.id %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-dark">Save changes</button>
+                            </div>
+                        </form>
+                        {% elif title == 'Surigao' %}
+                        <form action="{% url 'surigao_edit_item_view' item.id %}" method="post">
+                            <div class="modal-body calculation-form">
+                                {% load surigao_tags %}
                                 {% csrf_token %}
                                 {% editItemsModal item.id %}
                             </div>

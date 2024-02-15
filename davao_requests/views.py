@@ -121,7 +121,7 @@ def rs_view(request, rs_number):
         return redirect('login')
     
 
-def add_authorizedPerson_view(request, rs_number):
+def add_authorizedPerson_view(request, rs_number, toAuthorizedPersonPage=False):
     if request.user.is_authenticated:
                 
         # global person_form
@@ -138,7 +138,10 @@ def add_authorizedPerson_view(request, rs_number):
         form = AuthorizedPersonsForm(initial=init_data)
 
         if len(persons) == len(AuthorizedPersonsForm.Meta.TITLE_CHOICES.keys()):
-            return redirect(reverse('davao_add_items', kwargs={'rs_number':rs_number}))
+            if toAuthorizedPersonPage:
+                return redirect(reverse(list_view_persons))
+            else:
+                return redirect(reverse(list_viewRequest_items, kwargs={'rs_number':rs_number}))
         else:
             return render(request, 'main/actions/add_authorizedPerson.html', {'form':form, 'persons':persons, 'person_form':person_form,'title':'Davao'})
     else:
@@ -214,7 +217,7 @@ def edit_authorizedPerson_view(request, person_id):
             
             if form.is_valid():
                 form.save()
-                return redirect(reverse('davao'))
+                return redirect(reverse(list_view_persons))
             
         form = AuthorizedPersonsForm(instance=instance_data)
         return render(request, 'main/actions/edit_authorizedPerson.html', {'form':form, 'title':'Davao'})
@@ -225,9 +228,11 @@ def delete_person(request, person_id):
     if request.user.is_authenticated:
                 
         person = AuthorizedPersons.objects.get(pk=person_id)
+        print(f"ID: {person.pk}| Person ID: {person_id}, Name: {person.name}")
         person.delete()
         messages.success(request, "Person Deleted Successfully")
-        return redirect(reverse('davao_add_authorizedPerson', kwargs={'rs_number':person.header.rs}))
+        # return redirect(reverse('davao_add_authorizedPerson', kwargs={'rs_number':person.header.rs_number}))
+        return redirect(reverse(list_view_persons))
     else:
         return redirect('login')
 

@@ -31,10 +31,11 @@
             margin-top: 15px;
         }
     }
+
     .authorized-person-img {
-            position: absolute;
-            transform: translate(65px, -60px);
-        }
+        position: absolute;
+        transform: translate(65px, -60px);
+    }
 </style>
 <!-- For draggables -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -158,8 +159,8 @@
                         <td class="position-relative">
 
                             <p>Requested by:</p>
-                            <img class="authorized-person-img" src="/media/{{persons.Requested_by.1 }}" alt="" width="100px"
-                                class="draggable position-absolute">
+                            <img class="authorized-person-img" src="/media/{{persons.Requested_by.1 }}" alt=""
+                                width="100px" class="draggable position-absolute">
                             <p class=" indent-1">
                                 <span class="border-top border-dark px-4">{{persons.Requested_by.0}}</span>
                             </p>
@@ -169,8 +170,8 @@
                         <td>
                             <p>Prepared by:</p>
                             <!-- <br> -->
-                            <img class="authorized-person-img" src="/media/{{persons.Prepared_by.1 }}" alt="" width="100px"
-                                class="draggable position-absolute">
+                            <img class="authorized-person-img" src="/media/{{persons.Prepared_by.1 }}" alt=""
+                                width="100px">
                             <p class="indent-1">
                                 <span class="border-top border-dark px-4">{{persons.Prepared_by.0}}</span>
                             </p>
@@ -178,8 +179,8 @@
 
                         <td>
                             <p>Checked by:</p>
-                            <img class="authorized-person-img" src="/media/{{persons.Checked_by.1 }}" alt="" width="100px"
-                                class="draggable position-absolute">
+                            <img class="authorized-person-img" src="/media/{{persons.Checked_by.1 }}" alt=""
+                                width="100px" class="draggable position-absolute">
                             <p class=" indent-1">
                                 <span class="border-top border-dark px-4">{{persons.Checked_by.0}}</span>
                             </p>
@@ -189,8 +190,8 @@
                     <tr>
                         <td>
                             <p>Recommending Approval:</p>
-                            <img class="authorized-person-img" src="/media/{{persons.Recommending_Approval.1 }}" alt="" width="100px"
-                                class="draggable position-absolute">
+                            <img class="authorized-person-img" src="/media/{{persons.Recommending_Approval.1 }}" alt=""
+                                width="100px" class="draggable position-absolute">
                             <p class="indent-1">
                                 <span class="border-top border-dark px-4">{{persons.Recommending_Approval.0}}</span>
                             </p>
@@ -200,8 +201,7 @@
 
                         <td>
                             <p class="text-decoration-none text-black">Approved by:</p>
-                            <img class="authorized-person-img" src="/media/{{persons.Approved_by.1 }}" alt="" width="100px"
-                                class="draggable position-absolute">
+                            <img class="authorized-person-img" src="/media/{{persons.Approved_by.1 }}" alt="" width="100px">
                             <p class="indent-1">
                                 <span class="border-top border-dark px-4">{{persons.Approved_by.0}}</span>
                             </p>
@@ -237,8 +237,9 @@
     });
 
     $(function () {
-        $('.draggable').draggable();
+        $('.authorized-person-img').draggable();
     });
+
     var active = document.getElementById('view-reports-nav');
     var current = document.getElementById('side-navbar');
     var current = current.getElementsByClassName('active');

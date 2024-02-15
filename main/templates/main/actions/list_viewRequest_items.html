@@ -74,6 +74,28 @@
                             <button type="submit" class="btn btn-dark">Save changes</button>
                         </div>
                     </form>
+                    {% elif title == 'Negros' %}
+                    <form action="{% url 'negros_edit_item_view' d.id %}" method="post" id="editItemModal{{d.id}}">
+                        <div class="modal-body calculation-form">
+                            {% load negros_tags %}
+                            {% editItemModal d.id %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-dark">Save changes</button>
+                        </div>
+                    </form>
+                    {% elif title == 'Surigao' %}
+                    <form action="{% url 'surigao_edit_item_view' d.id %}" method="post" id="editItemModal{{d.id}}">
+                        <div class="modal-body calculation-form">
+                            {% load surigao_tags %}
+                            {% editItemModal d.id %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-dark">Save changes</button>
+                        </div>
+                    </form>
                     {% endif %}
                 </div>
             </div>
@@ -105,6 +127,28 @@
                     <form action="{% url 'cotabato_addRequest_items' rs_header.rs_number %}" method="post">
                         <div class="modal-body calculation-form">
                             {% load cotabato_tags %}
+                            {% addItemsModal rs_header.rs_number %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-dark">Save changes</button>
+                        </div>
+                    </form>
+                    {% elif title == 'Negros' %}
+                    <form action="{% url 'negros_addRequest_items' rs_header.rs_number %}" method="post">
+                        <div class="modal-body calculation-form">
+                            {% load negros_tags %}
+                            {% addItemsModal rs_header.rs_number %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-dark">Save changes</button>
+                        </div>
+                    </form>
+                    {% elif title == 'Surigao' %}
+                    <form action="{% url 'surigao_addRequest_items' rs_header.rs_number %}" method="post">
+                        <div class="modal-body calculation-form">
+                            {% load surigao_tags %}
                             {% addItemsModal rs_header.rs_number %}
                         </div>
                         <div class="modal-footer">

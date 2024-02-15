@@ -121,7 +121,7 @@ def rs_view(request, rs_number):
         return redirect('login')
     
 
-def add_authorizedPerson_view(request, rs_number):
+def add_authorizedPerson_view(request, rs_number, toAuthorizedPersonPage=False):
     if request.user.is_authenticated:
                 
         # global person_form
@@ -138,7 +138,10 @@ def add_authorizedPerson_view(request, rs_number):
         form = AuthorizedPersonsForm(initial=init_data)
 
         if len(persons) == len(AuthorizedPersonsForm.Meta.TITLE_CHOICES.keys()):
-            return redirect(reverse('cotabato_add_items', kwargs={'rs_number':rs_number}))
+            if toAuthorizedPersonPage:
+                return redirect(reverse(list_view_persons))
+            else:
+                return redirect(reverse(list_viewRequest_items, kwargs={'rs_number':rs_number}))
         else:
             return render(request, 'main/actions/add_authorizedPerson.html', {'form':form, 'persons':persons, 'person_form':person_form,'title':'Cotabato'})
     else:
@@ -227,7 +230,7 @@ def delete_person(request, person_id):
         person = AuthorizedPersons.objects.get(pk=person_id)
         person.delete()
         messages.success(request, "Person Deleted Successfully")
-        return redirect(reverse('cotabato_add_authorizedPerson', kwargs={'rs_number':person.header.rs}))
+        return redirect(reverse('cotabato_add_authorizedPerson', kwargs={'rs_number':person.header.rs_number}))
     else:
         return redirect('login')
 

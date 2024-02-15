@@ -256,13 +256,13 @@
         <div class="row">
             {% include 'main/sidebar.html' %}
 
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mb-5">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 
                     {% if messages %}
                     {% for message in messages %}
-                    <div class="alert alert-success position-absolute bottom-0 end-0 mx-3 alert-dismissible fade show" role="alert">
+                    <div class="alert alert-success position-absolute bottom-0 end-0 mt-5 mt-5 alert-dismissible fade show" role="alert">
                         {{message}}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
@@ -300,10 +300,22 @@
 
                                                 {% if title == 'Davao' %}
                                                 {% load davao_tags %}
+                                                {% renderAddRequestForm %}
+
                                                 {% elif title == 'Cotabato' %}
                                                 {% load cotabato_tags %}
-                                                {% endif %}
                                                 {% renderAddRequestForm %}
+
+                                                {% elif title == 'Negros' %}
+                                                {% load negros_tags %}
+                                                {% renderAddRequestForm %}
+
+                                                {% elif title == 'Surigao' %}
+                                                {% load surigao_tags %}
+                                                {% renderAddRequestForm %}
+
+                                                {% endif %}
+                                                
 
                                             </div>
                                             <div class="modal-footer">
