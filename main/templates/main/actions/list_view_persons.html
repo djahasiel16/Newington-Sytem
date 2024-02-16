@@ -16,7 +16,11 @@ Authorized Persons
         </thead>
         <tbody>
             {% for person in persons %}
+            {% if person.signature %}
+            <tr class="table-success">
+            {% else %}
             <tr>
+            {% endif %}
                 <td>{{person.header.rs_number}}</td>
                 <td>{{person.title}}</td>
                 <td>{{person.name}}</td>

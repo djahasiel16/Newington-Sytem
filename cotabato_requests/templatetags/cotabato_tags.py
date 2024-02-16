@@ -14,7 +14,7 @@ def renderPersonForm():
 
 @register.inclusion_tag('main/actions/modals/modal_add_requestForm.html')
 def renderAddRequestForm():
-    rs_number = f"CBT{timezone.now().year}-"
+    rs_number = f"CBT{str(timezone.now().year)[2:]}-"
     try:
         idx = CotabatoRequestHeader.objects.all()
         rs_number += str(len(idx)+1).zfill(3)

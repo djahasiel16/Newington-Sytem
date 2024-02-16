@@ -20,9 +20,9 @@
         <tbody>
             {% for r in rs %}
             {% if r.urgent %}
-            <tr class="table-danger table-bordered">
+            <tr class="table-bordered">
                 {% else %}
-            <tr>
+            <tr class="table-success">
                 {% endif %}
                 <td class="fw-medium">{{r.rs_number}}</td>
 
@@ -58,6 +58,14 @@
                             {% elif title == 'Negros' %}
                             {% load negros_tags %}
                             <a href="{% url 'negros_list_viewRequest_items' r.rs_number %}" role="button"
+                                class="btn btn-outline-dark btn-sm">
+                                <i class="bi bi-plus-circle-fill"></i>
+                                View/Add
+                                <span class="visually-hidden">Button</span>
+                            </a>
+                            {% elif title == 'Surigao' %}
+                            {% load negros_tags %}
+                            <a href="{% url 'surigao_list_viewRequest_items' r.rs_number %}" role="button"
                                 class="btn btn-outline-dark btn-sm">
                                 <i class="bi bi-plus-circle-fill"></i>
                                 View/Add

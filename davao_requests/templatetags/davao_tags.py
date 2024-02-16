@@ -13,7 +13,7 @@ def renderPersonForm():
 
 @register.inclusion_tag('main/actions/modals/modal_add_requestForm.html')
 def renderAddRequestForm():
-    rs_number = f"DVO{timezone.now().year}-"
+    rs_number = f"DVO{str(timezone.now().year)[2:]}-"
     try:
         idx = DavaoRequestHeader.objects.all()
         rs_number += str(len(idx)+1).zfill(3)

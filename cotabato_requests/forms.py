@@ -10,13 +10,15 @@ class CotabatoRequestHeaderForm(forms.ModelForm):
             'particulars',
             'project',
             'urgent',
+            'note',
             'date_requested',
             'date_needed'
         ]
 
     rs_number = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     particulars = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    payee = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    payee = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}), required=False)
+    note = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}), required=False)
     project = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','max_length':'"100"'}))
     date_requested = forms.DateField(widget=forms.DateInput(attrs={'class':'form-control', 'type':'date', 'autocomplete':'off'}))
     date_needed = forms.DateField(widget=forms.DateInput(attrs={'class':'form-control', 'type':'date', 'autocomplete':'off'}))

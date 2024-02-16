@@ -5,6 +5,7 @@
 
 <head>
     <script src="{% static '/main/js/color-modes.js' %}"></script>
+    <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -259,15 +260,6 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mb-5">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-
-                    {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-success position-absolute bottom-0 end-0 mt-5 mt-5 alert-dismissible fade show" role="alert">
-                        {{message}}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    {% endfor %}
-                    {% endif %}
                     <h1 class="h2">{% block content-title %}{{title}}{% endblock %}</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         {# {% if title == 'Davao' %} #}
@@ -367,8 +359,8 @@
             // Event handlers for 'input' events on #qty and #unit_cost
             $('.calculation-form').on('input', '.quantity, .unit_cost', function () {
                 var form = $(this).closest('.calculation-form');
-                var qtyValue = parseInt(form.find('.quantity').val()) || 0;
-                var unitCostValue = parseInt(form.find('.unit_cost').val()) || 0;
+                var qtyValue = parseFloat(form.find('.quantity').val()) || 0;
+                var unitCostValue = parseFloat(form.find('.unit_cost').val()) || 0;
 
                 var rs = qtyValue * unitCostValue;
                 form.find('.amount').val(rs);

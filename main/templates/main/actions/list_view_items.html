@@ -20,7 +20,7 @@
         </thead>
         <tbody>
             {% for item in items %}
-            {% if not item.ignore %}
+            {% comment %} {% if not item.ignore %} {% endcomment %}
 
             <tr>
                 <td>
@@ -116,7 +116,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Update Item</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         {% if title == 'Davao' %}
@@ -171,7 +171,7 @@
                     </div>
                 </div>
             </div>
-            {% endif %}
+            {% comment %} {% endif %} {% endcomment %}
             {% endfor %}
         </tbody>
     </table>

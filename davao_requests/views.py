@@ -37,7 +37,7 @@ def add_request_view(request):
             else:
                 print(form.errors)
             
-        rs_number = f"DVO{timezone.now().year}-"
+        rs_number = f"DVO{str(timezone.now().year)[2:]}-"
         try:
             idx = DavaoRequestHeader.objects.all()
             rs_number += str(len(idx)+1).zfill(3)

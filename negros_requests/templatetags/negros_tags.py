@@ -13,7 +13,7 @@ def renderPersonForm():
 
 @register.inclusion_tag('main/actions/modals/modal_add_requestForm.html')
 def renderAddRequestForm():
-    rs_number = f"NGRO{timezone.now().year}-"
+    rs_number = f"NGRO{str(timezone.now().year)[2:]}-"
     try:
         idx = NegrosRequestHeader.objects.all()
         rs_number += str(len(idx)+1).zfill(3)

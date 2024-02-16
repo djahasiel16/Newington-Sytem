@@ -10,7 +10,10 @@ def clean_int(value):
         else:
             return value
     except ValueError:
-        return value
+        if value == '0.00':
+            return ""
+        else:
+            return value
 
 @register.filter(name='clean_empty')
 def clean_empty(value):

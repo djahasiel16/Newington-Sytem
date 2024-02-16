@@ -1,6 +1,15 @@
 {% extends 'main/base.html' %}
 
-{% block content-title %} Requested Items for {{rs_header.rs_number}} {% endblock %}
+{% block content-title %} 
+
+{% if rs_header.payee %}
+    {{rs_header.payee}}
+{% else %}
+    {{rs_header.particulars}}
+{% endif %}
+
+{% endblock %}
+
 {% block content %}
 {% load humanize %}
 
@@ -110,12 +119,19 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{rs_header.payee}}</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                            {% if rs_header.payee %}
+                                {{rs_header.payee}}
+                            {% else %}
+                                {{rs_header.particulars}}
+                            {% endif %}
+                        </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     {% if title == 'Davao' %}
                     <form action="{% url 'davao_addRequest_items' rs_header.rs_number %}" method="post">
                         <div class="modal-body calculation-form">
+                            {% load davao_tags %}
                             {% addItemsModal rs_header.rs_number %}
                         </div>
                         <div class="modal-footer">
