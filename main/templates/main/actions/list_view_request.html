@@ -64,7 +64,7 @@
                                 <span class="visually-hidden">Button</span>
                             </a>
                             {% elif title == 'Surigao' %}
-                            {% load negros_tags %}
+                            {% load surigao_tags %}
                             <a href="{% url 'surigao_list_viewRequest_items' r.rs_number %}" role="button"
                                 class="btn btn-outline-dark btn-sm">
                                 <i class="bi bi-plus-circle-fill"></i>
@@ -161,6 +161,29 @@
                                         if (confirm("Are you sure you want to delete request number " + rsNumber + "?")) {
                                             // "{% url 'davao_delete_request' r.rs_number %}"
                                             window.location.href = "{% url 'negros_delete_request' r.rs_number %}";
+                                        } else {
+                                            // Do nothing or provide feedback to the user that the delete action was canceled.
+                                        }
+                                    }
+                                </script>
+                                <button type="submit" class="btn btn-dark">Save changes</button>
+                            </div>
+                        </form>
+                        {% elif title == 'Surigao' %}
+                        <form action="{% url 'surigao_edit_request_view' r.rs_number %}" method="post">
+                            <div class="modal-body">
+                                {% load surigao_tags %}
+                                {% editRequestModalForm r.rs_number %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <a class="btn btn-danger" onclick="confirmDelete('{{ r.rs_number }}')">Delete</a>
+
+                                <script>
+                                    function confirmDelete(rsNumber) {
+                                        if (confirm("Are you sure you want to delete request number " + rsNumber + "?")) {
+                                            // "{% url 'davao_delete_request' r.rs_number %}"
+                                            window.location.href = "{% url 'surigao_delete_request' r.rs_number %}";
                                         } else {
                                             // Do nothing or provide feedback to the user that the delete action was canceled.
                                         }

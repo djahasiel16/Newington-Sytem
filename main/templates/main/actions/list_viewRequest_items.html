@@ -3,9 +3,9 @@
 {% block content-title %} 
 
 {% if rs_header.payee %}
-    {{rs_header.payee}}
+    {{rs_header.rs_number}}: {{rs_header.payee}}
 {% else %}
-    {{rs_header.particulars}}
+    {{rs_header.rs_number}}: {{rs_header.particulars}}
 {% endif %}
 
 {% endblock %}
@@ -120,6 +120,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">
+                            ADD ITEM FOR:  
                             {% if rs_header.payee %}
                                 {{rs_header.payee}}
                             {% else %}

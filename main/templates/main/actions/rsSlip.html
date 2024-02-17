@@ -174,8 +174,21 @@
 
         <div class="row justify-content-center">
             <div class="col-12 align-items-center m-0">
+                {% with name='Engr. Dennis Hernandez' %}
                 <table class="table table-borderless" style="font-size: 9pt;" id="authorized-person">
                     <tr>
+                        {% if persons.Requested_by.0 == name %}
+                        <td class="position-relative">
+
+                            <p>Requested by:</p>
+                            <img class="authorized-person-img" src="/media/{{persons.Requested_by.1 }}" alt=""
+                                width="150px" class="draggable position-absolute">
+                            <p class=" indent-1">
+                                <span class="border-top border-dark px-4">{{persons.Requested_by.0}}</span>
+                            </p>
+
+                        </td>
+                        {% else %}
                         <td class="position-relative">
 
                             <p>Requested by:</p>
@@ -186,6 +199,7 @@
                             </p>
 
                         </td>
+                        {% endif %}
 
                         <td>
                             <p>Prepared by:</p>
@@ -208,6 +222,7 @@
                     </tr>
 
                     <tr>
+                        {% if persons.Recommending_Approval.0 == name %}
                         <td>
                             <p>Recommending Approval:</p>
                             <img class="authorized-person-img" src="/media/{{persons.Recommending_Approval.1 }}" alt=""
@@ -216,7 +231,16 @@
                                 <span class="border-top border-dark px-4">{{persons.Recommending_Approval.0}}</span>
                             </p>
                         </td>
-
+                        {% else %}
+                        <td>
+                            <p>Recommending Approval:</p>
+                            <img class="authorized-person-img" src="/media/{{persons.Recommending_Approval.1 }}" alt=""
+                                width="100px" class="draggable position-absolute">
+                            <p class="indent-1">
+                                <span class="border-top border-dark px-4">{{persons.Recommending_Approval.0}}</span>
+                            </p>
+                        </td>
+                        {% endif %}
                         <td>&nbsp;</td>
 
                         <td>
@@ -228,6 +252,7 @@
                         </td>
                     </tr>
                 </table>
+                {% endwith %}
             </div>
 
         </div>
