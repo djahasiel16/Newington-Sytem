@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- 
+<div class="row justify-content-center">
+    <div class="col-8"> -->
+        <form action="" method="post" class="fw-medium">
+            <h4>Edit Item</h4>
+            {% csrf_token %}
+            {{form|crispy}}
+            <button class="btn btn-success my-3">Update</button>
+        </form>
+    <!-- </div>
+</div> -->
+
+<script>
+    $(document).ready(function() {
+        // Event handlers for 'input' events on #qty and #unit_cost
+        $('#qty, #unit_cost').on('input', function(){
+            var qtyValue = parseInt($('#qty').val()) || 0;
+            var unitCostValue = parseInt($('#unit_cost').val()) || 0;
+            
+            var rs = qtyValue * unitCostValue;
+            $('#amount').val(rs);
+        });
+    });
+
+</script>
+{% endblock %}
