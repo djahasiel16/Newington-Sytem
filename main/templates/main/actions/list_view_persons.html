@@ -104,6 +104,22 @@ Authorized Persons
                             }
                         }
                     </script>
+                    {% elif title == 'Bukidnon' %}
+                    <button onclick="confirmDelete{{person.id}}('{{ person.name }}')" role="button"
+                        class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-trash3-fill"></i>
+                        Delete
+                        <span class="visually-hidden">Button</span>
+                    </button>
+                    <script>
+                        function confirmDelete{{person.id}}(info) {
+                            if (confirm("Are you sure you want to delete  " + info + " ?")) {
+                                window.location.href = "{% url 'bukidnon_delete_person' person.id %}";
+                            } else {
+                                // Do nothing or provide feedback to the user that the delete action was canceled.
+                            }
+                        }
+                    </script>
                     {% endif %}
                 </td>
             </tr>
@@ -162,6 +178,19 @@ Authorized Persons
                             {% csrf_token %}
                             <div class="modal-body calculation-form">
                                 {% load surigao_tags %}
+                                {% editPersonModal person.id %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                        {% elif title == 'Bukidnon' %}
+                        <form action="{% url 'bukidnon_edit_authorizedPerson' person.id %}" method="post"
+                            enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body calculation-form">
+                                {% load bukidnon_tags %}
                                 {% editPersonModal person.id %}
                             </div>
                             <div class="modal-footer">

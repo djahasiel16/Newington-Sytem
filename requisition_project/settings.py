@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'surigao_requests',
     'cotabato_requests',
     'negros_requests',
+    'bukidnon_requests',
     'sys_settings',
     'crispy_forms',
     'crispy_bootstrap4',

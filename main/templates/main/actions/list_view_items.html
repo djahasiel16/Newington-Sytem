@@ -40,6 +40,10 @@
                     <a href="{% url 'surigao_rsView' item.header.rs_number %}" class="text-decoration-none text-none">
                         {{item.header.rs_number}}
                     </a>
+                    {% elif title == 'Bukidnon' %}
+                    <a href="{% url 'bukidnon_rsView' item.header.rs_number %}" class="text-decoration-none text-none">
+                        {{item.header.rs_number}}
+                    </a>
                     {% endif %}
                 </td>
                 <td>{{item.description}} {{item.item_id}}</td>
@@ -107,6 +111,16 @@
                             }
                         }
                     </script>
+                    {% elif title == 'Bukidnon' %}
+                    <script>
+                        function confirmDelete(item_id, info) {
+                            if (confirm("Are you sure you want to delete request item " + info + "?")) {
+                                window.location.href = "{% url 'bukidnon_delete_item' item.id %}";
+                            } else {
+                                // Do nothing or provide feedback to the user that the delete action was canceled.
+                            }
+                        }
+                    </script>
                     {% endif %}
                 </td>
             </tr>
@@ -159,6 +173,18 @@
                         <form action="{% url 'surigao_edit_item_view' item.id %}" method="post">
                             <div class="modal-body calculation-form">
                                 {% load surigao_tags %}
+                                {% csrf_token %}
+                                {% editItemsModal item.id %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-dark">Save changes</button>
+                            </div>
+                        </form>
+                        {% elif title == 'Bukidnon' %}
+                        <form action="{% url 'bukidnon_edit_item_view' item.id %}" method="post">
+                            <div class="modal-body calculation-form">
+                                {% load bukidnon_tags %}
                                 {% csrf_token %}
                                 {% editItemsModal item.id %}
                             </div>

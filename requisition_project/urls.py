@@ -26,6 +26,7 @@ urlpatterns = [
     path('surigao/', include('surigao_requests.urls')),
     path('cotabato/', include('cotabato_requests.urls')),
     path('negros/', include('negros_requests.urls')),
+    path('bukidnon/', include('bukidnon_requests.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('authentication.urls')),
     path('sys-settings/', include('sys_settings.urls')),
