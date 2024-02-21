@@ -139,7 +139,7 @@
             {% for item in items %}
             <tr>
 
-                <td class="text-center p-1" contenteditable>{{ item.quantity | clean_int}}</td>
+                <td class="text-center p-1" contenteditable>{{ item.quantity|clean_int|clean_decimal}}</td>
                 <td class="text-center p-1" contenteditable>{{ item.unit }}</td>
                 {% if item.ignore %}
                 <td class="p-1 fw-bold" contenteditable>&nbsp;&nbsp;{{ item.description }} {{item.item_id}}</td>
@@ -252,6 +252,7 @@
                         </td>
                     </tr>
                 </table>
+                
                 {% endwith %}
             </div>
 

@@ -1,0 +1,69 @@
+{% extends 'main/base.html' %}
+
+{%block content-title %}
+Newington Builders Personnels
+{% endblock %}
+
+{% block content %}
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-dark mb-3" data-bs-toggle="modal" data-bs-target="#personnelModal">
+  Add Personnel
+</button>
+
+<table id="personnel-table" class="table table-lg text-center table-striped table-hover" style="font-size: 9pt;">
+  <thead>
+    <th class="text-start">Name</th>
+    <th>Title</th>
+    <th>Signature</th>
+    <th>Actions</th>
+    </head>
+  <tbody>
+    {% for person in personnel %}
+    <tr>
+      <td class="align-middle text-start">{{person.name}}</td>
+      <td class="align-middle">{{person.title}}</td>
+      <td class="align-middle"><img src="/media/{{person.signature}}" alt="" width="50px"></td>
+      <td class="align-middle">
+        <button class="btn btn-outline-dark btn-sm">Edit Personnel</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="personnelModal" tabindex="-1" aria-labelledby="personnelModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="personnelModalLabel">Add Personnel</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{% url 'save_personnel' %}" enctype="multipart/form-data" method="post">
+        <div class="modal-body">
+          {% csrf_token %}
+          {% load maintags %}
+          {% personnelFormModal %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-outline-dark">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(function () {
+    $('#personnel-table').DataTable();
+
+    var active = document.getElementById('personnel-nav');
+    var current = document.getElementById('side-navbar');
+    var current = current.getElementsByClassName('active');
+    current[0].className = current[0].className.replace("active", "");
+    active.className += " active";
+  });
+</script>
+{% endblock %}

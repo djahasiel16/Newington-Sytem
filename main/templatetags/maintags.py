@@ -1,4 +1,5 @@
 from django import template
+from main.forms import PersonnelForm
 
 register = template.Library()
 
@@ -21,3 +22,18 @@ def clean_empty(value):
         return "--"
     else:
         return value
+    
+@register.inclusion_tag('main/actions/modals/modal_form.html')
+def personnelFormModal():
+    form = PersonnelForm()
+    return {'form':form}
+
+@register.filter(name="clean_decimal")
+def clean_decimal(value):
+    try:
+        if value > int(value):
+            return value
+        else:
+            return int(value)
+    except ValueError:
+        return ""

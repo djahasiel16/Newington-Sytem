@@ -24,3 +24,12 @@ class SurigaoAuthorizedPersons(models.Model):
     middle_initial = models.CharField(max_length=60)
     lastname = models.CharField(max_length=60)
     role = models.CharField(max_length=60)
+
+
+class Personnel(models.Model):
+    name = models.CharField(max_length=53)
+    title = models.CharField(max_length=30)
+    signature = models.ImageField(upload_to='signatures/', blank=True)
+
+    def __str__(self):
+        return self.name

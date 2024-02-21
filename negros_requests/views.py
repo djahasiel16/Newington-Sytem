@@ -9,8 +9,6 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib import messages
 
-# timezone.now().year
-
 # Create your views here.
 person_form = AuthorizedPersonsForm
 

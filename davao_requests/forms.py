@@ -1,5 +1,6 @@
 from django import forms
-from .models import DavaoRequestHeader, DavaoRequestItems, AuthorizedPersons, Monitoring, Persons
+from .models import DavaoRequestHeader, DavaoRequestItems, AuthorizedPersons, Monitoring
+from main.models import Personnel
 
 class DavaoRequestHeaderForm(forms.ModelForm):
     class Meta:
@@ -117,7 +118,7 @@ class AuthorizedPersonsForm(forms.ModelForm):
             'header',
             'name',
             'title',
-            'signature'
+            'sign',
         ]
         TITLE_CHOICES = {
         'Requested by':'Requested by',
@@ -131,9 +132,8 @@ class AuthorizedPersonsForm(forms.ModelForm):
             'header':forms.TextInput(attrs={'class':'form-control'}),
             'name':forms.TextInput(attrs={'class':'form-control'}),
             'title':forms.Select(attrs={'class':'form-control'}, choices=TITLE_CHOICES),
-            'signature':forms.FileInput(attrs={'class':'form-control'})
+            'sign':forms.CheckboxInput(attrs={'class':''})
         }
-
 
 class MonitoringForm(forms.ModelForm):
     class Meta:
@@ -179,3 +179,6 @@ class MonitoringForm(forms.ModelForm):
             'withdrawal_no':'Withdrawal No.',
             'item_date':'Date'
         }
+        
+        
+        

@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from main.models import Personnel
 # Create your models here.
 class DavaoRequestHeader(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -37,19 +37,21 @@ class DavaoRequestItems(models.Model):
 
 class AuthorizedPersons(models.Model):
     header = models.ForeignKey(DavaoRequestHeader, on_delete=models.CASCADE)
+    personnel = models.ForeignKey(Personnel, on_delete=models.CASCADE)
     name = models.CharField(max_length=53)
     title = models.CharField(max_length=30)
-    signature = models.ImageField(upload_to='signatures/', blank=True)
+    sign = models.BooleanField(default=False)
 
     # def __str__(self):
     #     return self.name
 
-class Persons(models.Model):
-    name = models.CharField(max_length=53)
-    title = models.CharField(max_length=30)
+# class Persons(models.Model):
+#     name = models.CharField(max_length=53)
+#     title = models.CharField(max_length=30)
+#     signature = models.ImageField(upload_to='signatures/', blank=True)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 class Monitoring(models.Model):
     header = models.ForeignKey(DavaoRequestItems, on_delete=models.CASCADE, null=True, blank=True)
