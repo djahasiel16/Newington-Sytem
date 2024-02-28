@@ -8,6 +8,7 @@ from .forms import SurigaoRequestHeaderForm, SurigaoRequestItemsForm, Authorized
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib import messages
+from main.models import Personnel
 
 # timezone.now().year
 
@@ -135,7 +136,18 @@ def rs_view(request, rs_number):
                 person_details[person.personnel.title.replace(" ","_")] = (person.personnel.name, "")
 
 
-        return render(request, 'main/actions/rsSlip.html', {'header':header, 'items':items, 'fields':list(range(1,16-len(items)+1)), 'total':total, 'persons':person_details, 'title':'Surigao'})
+        checkedBy = Personnel.objects.filter(title="Checked by")[0]
+        approvedBy = Personnel.objects.filter(title="Approved by")[0]
+        
+        return render(request, 'main/actions/rsSlip.html', {
+            'header':header, 
+            'items':items, 
+            'fields':list(range(1,16-len(items)+1)), 
+            'total':total, 
+            'persons':person_details,
+            'checkedBy':checkedBy,
+            'approvedBy':approvedBy,
+            'title':'Surigao'})
     else:
         return redirect('login')    
 
