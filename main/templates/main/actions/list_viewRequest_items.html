@@ -15,6 +15,9 @@
 
 <button type="button" class="btn btn-dark my-3" data-bs-toggle="modal"
     data-bs-target="#item{{rs_header.rs_number}}">Add Item</button>
+
+<a href="{% url 'davao_add_authorizedPerson' rs_header.rs_number %}" class="btn btn-secondary my-3">Authorized Persons</a>
+
 <table class="table table-sm text-center table-striped table-hover" id="request-items-table" style="font-size: 9pt;">
     <thead>
         <th>RS NO</th>
