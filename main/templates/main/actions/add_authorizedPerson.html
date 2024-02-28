@@ -46,10 +46,12 @@
             </thead>
             <tbody>
                 {% for person in persons %}
+                {% with person=person.personnel %}
                 <tr>
                     <td>{{person.name}}</td>
                     <td>{{person.title}}</td>
                 </tr>
+                {% endwith %}
                 {% endfor %}
             </tbody>
         </table>
