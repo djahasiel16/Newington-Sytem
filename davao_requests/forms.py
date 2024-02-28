@@ -116,9 +116,8 @@ class AuthorizedPersonsForm(forms.ModelForm):
         model = AuthorizedPersons
         fields = [
             'header',
-            'name',
-            'title',
-            'sign',
+            'personnel',
+            'signed'
         ]
         TITLE_CHOICES = {
         'Requested by':'Requested by',
@@ -132,8 +131,10 @@ class AuthorizedPersonsForm(forms.ModelForm):
             'header':forms.TextInput(attrs={'class':'form-control'}),
             'name':forms.TextInput(attrs={'class':'form-control'}),
             'title':forms.Select(attrs={'class':'form-control'}, choices=TITLE_CHOICES),
-            'sign':forms.CheckboxInput(attrs={'class':''})
+            'signature':forms.FileInput(attrs={'class':'form-control'}),
+            'signed':forms.CheckboxInput()
         }
+            
 
 class MonitoringForm(forms.ModelForm):
     class Meta:

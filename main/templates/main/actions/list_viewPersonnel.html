@@ -21,17 +21,49 @@ Newington Builders Personnels
     {% for person in personnel %}
     <tr>
       <td class="align-middle text-start">{{person.name}}</td>
-      <td class="align-middle">{{person.title}}</td>
+      <td class="align-middle text-start">{{person.title}}</td>
       <td class="align-middle"><img src="/media/{{person.signature}}" alt="" width="50px"></td>
       <td class="align-middle">
-        <button class="btn btn-outline-dark btn-sm">Edit Personnel</button>
+        <button type="button" class="btn btn-dark btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#edit_personnelModal{{person.id}}">Edit Personnel</button>
       </td>
     </tr>
+
+    <!-- Modal for Editing Personnel Info -->
+<div class="modal fade" id="edit_personnelModal{{person.id}}" tabindex="-1" aria-labelledby="edit_personnelModal{{person.id}}Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="edit_personnelModal{{person.id}}Label">Edit Personnel</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{% url 'edit_personnel' person.id %}" enctype="multipart/form-data" method="post">
+        <div class="modal-body">
+          {% csrf_token %}
+          {% load maintags %}
+          {% edit_personnelFormModal person.id %}
+        </div>
+        <div class="modal-footer">
+          <button type='button' class="btn btn-secondary" onclick="confirmDelete()">Delete</button>
+          <button type="submit" class="btn btn-outline-dark">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  function confirmDelete(item_id, info) {
+      if (confirm("Are you sure you want to delete  " + '{{person.id}}' + "?")) {
+          window.location.href = "{% url 'delete_personnel' person.id %}";
+      } else {
+          // Do nothing or provide feedback to the user that the delete action was canceled.
+      }
+  }
+</script>
     {% endfor %}
   </tbody>
 </table>
 
-<!-- Modal -->
+<!-- Modal for Adding Personnel -->
 <div class="modal fade" id="personnelModal" tabindex="-1" aria-labelledby="personnelModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

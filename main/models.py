@@ -29,7 +29,7 @@ class SurigaoAuthorizedPersons(models.Model):
 class Personnel(models.Model):
     name = models.CharField(max_length=53)
     title = models.CharField(max_length=30)
-    signature = models.ImageField(upload_to='signatures/', blank=True)
+    signature = models.ImageField(upload_to='signatures/personnel/', blank=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.title} {self.name}"

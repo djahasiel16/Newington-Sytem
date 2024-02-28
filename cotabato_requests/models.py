@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from main.models import Personnel
 # Create your models here.
 class CotabatoRequestHeader(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -37,12 +37,14 @@ class CotabatoRequestItems(models.Model):
 
 class AuthorizedPersons(models.Model):
     header = models.ForeignKey(CotabatoRequestHeader, on_delete=models.CASCADE)
-    name = models.CharField(max_length=53)
-    title = models.CharField(max_length=30)
+    personnel = models.ForeignKey(Personnel, on_delete=models.CASCADE, related_name="AuthorizedPersonsCotabato")
+    name = models.CharField(max_length=53, null=True, blank=True)
+    title = models.CharField(max_length=30, null=True, blank=True)
     signature = models.ImageField(upload_to='signatures/', blank=True)
+    signed = models.BooleanField(null=True, default=False)
 
     def __str__(self):
-        return self.name
+        return f"{self.personnel.name} {self.personnel.title}"
 
 class Persons(models.Model):
     name = models.CharField(max_length=53)

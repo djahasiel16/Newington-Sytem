@@ -37,14 +37,16 @@ class DavaoRequestItems(models.Model):
 
 class AuthorizedPersons(models.Model):
     header = models.ForeignKey(DavaoRequestHeader, on_delete=models.CASCADE)
-    personnel = models.ForeignKey(Personnel, on_delete=models.CASCADE)
-    name = models.CharField(max_length=53)
-    title = models.CharField(max_length=30)
-    sign = models.BooleanField(default=False)
+    personnel = models.ForeignKey(Personnel, on_delete=models.CASCADE, related_name="AuthorizedPersonsDavao", null=True)
+    # personnel = models.ManyToManyField(Personnel)
+    name = models.CharField(max_length=53, null=True, blank=True)
+    title = models.CharField(max_length=30, null=True, blank=True)
+    signature = models.ImageField(upload_to='signatures/', blank=True)
+    signed = models.BooleanField(null=True, default=False)
 
-    # def __str__(self):
-    #     return self.name
-
+    def __str__(self):
+        return f"{self.personnel.name} {self.personnel.title}"
+    
 # class Persons(models.Model):
 #     name = models.CharField(max_length=53)
 #     title = models.CharField(max_length=30)

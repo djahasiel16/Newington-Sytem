@@ -104,6 +104,28 @@ def add_itemsRequest_view(request, rs_number):
     else:
         return redirect('login')
 
+def rs_view_depreciated(request, rs_number):
+    if request.user.is_authenticated:
+                
+        header = DavaoRequestHeader.objects.get(pk=rs_number)
+        items = DavaoRequestItems.objects.filter(header=header)
+        total = items.aggregate(amount_sum=Sum('amount'))['amount_sum']
+        persons = AuthorizedPersons.objects.filter(header=DavaoRequestHeader.objects.get(pk=rs_number))
+        person_details = {}
+        for person in persons:
+            name = person.personnel.name
+            if person.signed:
+                person_details[person.personnel.title.replace(" ","_")] = (name, person.personnel.signature)
+            else:
+                person_details[person.personnel.title.replace(" ","_")] = (name, "")
+            
+            
+
+        return render(request, 'main/actions/rsSlip.html', {'header':header, 'items':items, 'fields':list(range(1,16-len(items)+1)), 'total':total, 'persons':person_details, 'title':'Davao'})
+    else:
+        return redirect('login')
+    
+
 def rs_view(request, rs_number):
     if request.user.is_authenticated:
                 
@@ -113,15 +135,15 @@ def rs_view(request, rs_number):
         persons = AuthorizedPersons.objects.filter(header=DavaoRequestHeader.objects.get(pk=rs_number))
         person_details = {}
         for person in persons:
-            name = person.name
-            person_sign = Personnel.objects.filter(name=person.name)
-            person_details[person.title.replace(" ","_")] = (name, person_sign[0].signature)
-            
+            if person.signed:
+                person_details[person.personnel.title.replace(" ","_")] = (person.personnel.name, person.personnel.signature)
+            else:
+                person_details[person.personnel.title.replace(" ","_")] = (person.personnel.name, "")
+
 
         return render(request, 'main/actions/rsSlip.html', {'header':header, 'items':items, 'fields':list(range(1,16-len(items)+1)), 'total':total, 'persons':person_details, 'title':'Davao'})
     else:
         return redirect('login')
-    
 
 def add_authorizedPerson_view(request, rs_number, toAuthorizedPersonPage=False):
     if request.user.is_authenticated:
@@ -216,6 +238,7 @@ def edit_authorizedPerson_view(request, person_id):
                 request.POST,
                 request.FILES,
                 instance=instance_data,
+                initial={'personnel':instance_data.personnel}
                 )
             
             if form.is_valid():

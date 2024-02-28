@@ -29,3 +29,19 @@ def save_personnel_data(request):
             
     return redirect(reverse('personnel_view'))
 
+def edit_personnel_data(request, personnel_id):
+    if request.method == 'POST':
+       
+        form = PersonnelForm(request.POST, request.FILES, instance=Personnel.objects.get(pk=personnel_id))
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Personnel Updated Successfully')
+            
+    return redirect(reverse('personnel_view'))
+
+
+def delete_personnel(request, personnel_id):
+    personnel = Personnel.objects.get(pk=personnel_id)
+    personnel.delete()
+    
+    return redirect(reverse('personnel_view'))
