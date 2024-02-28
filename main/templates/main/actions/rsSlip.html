@@ -29,12 +29,13 @@
             left: 0;
             top: 0;
             margin-top: .1in;
+            margin-bottom: .1in;
         }
     }
 
     .authorized-person-img {
         position: absolute;
-        transform: translate(65px, -60px);
+        transform: translate(65px, -18px);
     }
 
     .table-wrapper {
@@ -48,6 +49,8 @@
    tr > .tableHeader {
         border: 1px solid black;
         border-spacing: 1;
+        padding: 0;
+        margin: 0;
    }
 
 </style>
@@ -183,7 +186,7 @@
                             <p>Requested by:</p>
                             <img class="authorized-person-img" src="/media/{{persons.Requested_by.1 }}" alt=""
                                 width="150px" class="draggable position-absolute">
-                            <p class=" indent-1">
+                            <p class=" indent-1 mt-5">
                                 <span class="border-top border-dark px-4">{{persons.Requested_by.0}}</span>
                             </p>
 
@@ -194,7 +197,7 @@
                             <p>Requested by:</p>
                             <img class="authorized-person-img" src="/media/{{persons.Requested_by.1 }}" alt=""
                                 width="100px" class="draggable position-absolute">
-                            <p class=" indent-1">
+                            <p class=" indent-1 mt-5">
                                 <span class="border-top border-dark px-4">{{persons.Requested_by.0}}</span>
                             </p>
 
@@ -206,7 +209,7 @@
                             <!-- <br> -->
                             <img class="authorized-person-img" src="/media/{{persons.Prepared_by.1 }}" alt=""
                                 width="100px">
-                            <p class="indent-1">
+                            <p class="indent-1 mt-5">
                                 <span class="border-top border-dark px-4">{{persons.Prepared_by.0}}</span>
                             </p>
                         </td>
@@ -215,7 +218,7 @@
                             <p>Checked by:</p>
                             <img class="authorized-person-img" src="/media/{{persons.Checked_by.1 }}" alt=""
                                 width="100px" class="draggable position-absolute">
-                            <p class=" indent-1">
+                            <p class=" indent-1 mt-5">
                                 <span class="border-top border-dark px-4">{{persons.Checked_by.0}}</span>
                             </p>
                         </td>
@@ -227,7 +230,7 @@
                             <p>Recommending Approval:</p>
                             <img class="authorized-person-img" src="/media/{{persons.Recommending_Approval.1 }}" alt=""
                                 width="150px" class="draggable position-absolute">
-                            <p class="indent-1">
+                            <p class="indent-1 mt-5">
                                 <span class="border-top border-dark px-4">{{persons.Recommending_Approval.0}}</span>
                             </p>
                         </td>
@@ -236,7 +239,7 @@
                             <p>Recommending Approval:</p>
                             <img class="authorized-person-img" src="/media/{{persons.Recommending_Approval.1 }}" alt=""
                                 width="100px" class="draggable position-absolute">
-                            <p class="indent-1">
+                            <p class="indent-1 mt-5">
                                 <span class="border-top border-dark px-4">{{persons.Recommending_Approval.0}}</span>
                             </p>
                         </td>
@@ -246,7 +249,7 @@
                         <td>
                             <p class="text-decoration-none text-black">Approved by:</p>
                             <img class="authorized-person-img" src="/media/{{persons.Approved_by.1 }}" alt="" width="100px">
-                            <p class="indent-1">
+                            <p class="indent-1 mt-5">
                                 <span class="border-top border-dark px-4">{{persons.Approved_by.0}}</span>
                             </p>
                         </td>
@@ -260,19 +263,21 @@
 
     </div>
     <!-- <ul> -->
-    <span contenteditable="true" class="fw-medium m-0 p-0" style="font-size: 9pt;">
-        F-PUR-003<br>
-        {% if title == 'Davao' %}
-        DVO
-        {% elif title == 'Cotabato' %}
-        CBT
-        {% elif title == 'Negros' %}
-        NRGO
-        {% elif title == 'Surigao' %}
-        SRGO
-        {% endif %}
-        Rev. 5-D 1/21/2024
-    </span>
+    <div style="margin-top: -15px;">
+        <span contenteditable="true" class="fw-medium m-0 p-0" style="font-size: 9pt;">
+            F-PUR-003<br>
+            {% if title == 'Davao' %}
+            DVO
+            {% elif title == 'Cotabato' %}
+            CBT
+            {% elif title == 'Negros' %}
+            NRGO
+            {% elif title == 'Surigao' %}
+            SRGO
+            {% endif %}
+            Rev. 5-D 1/21/2024
+        </span>
+    </div>
 </div>
 <script>
     $(document).ready(function () {
