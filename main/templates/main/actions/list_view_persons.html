@@ -16,7 +16,9 @@ Authorized Persons
         </thead>
         <tbody>
             {% for person in persons %}
-            {% if person.signature %}
+            {% comment %} editedPart {% endcomment %}
+            {% with person=person %}
+            {% if person.signed %}
             <tr class="table-success">
             {% else %}
             <tr>
@@ -202,6 +204,7 @@ Authorized Persons
                     </div>
                 </div>
             </div>
+            {% endwith %}
             {% endfor %}
         </tbody>
     </table>

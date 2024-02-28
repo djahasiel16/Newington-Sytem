@@ -47,6 +47,13 @@
                         <span class="visually-hidden">Button</span>
                         Preview
                     </a>
+                    {% elif title == 'Bukidnon' %}
+                    <a href="{% url 'bukidnon_rsView' r.rs_number %}" role="button"
+                        class="btn btn-outline-dark btn-sm">
+                        <i class="bi bi-printer-fill"></i>
+                        <span class="visually-hidden">Button</span>
+                        Preview
+                    </a>
                     {% endif %}
                 </td>
             </tr>

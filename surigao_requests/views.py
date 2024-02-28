@@ -104,7 +104,7 @@ def add_itemsRequest_view(request, rs_number):
     else:
         return redirect('login')
 
-def rs_view(request, rs_number):
+def rs_view_depreciated(request, rs_number):
     if request.user.is_authenticated:
                 
         header = SurigaoRequestHeader.objects.get(pk=rs_number)
@@ -119,7 +119,25 @@ def rs_view(request, rs_number):
         return render(request, 'main/actions/rsSlip.html', {'header':header, 'items':items, 'fields':list(range(1,16-len(items)+1)), 'total':total, 'persons':person_details, 'title':'Surigao'})
     else:
         return redirect('login')
-    
+
+def rs_view(request, rs_number):
+    if request.user.is_authenticated:
+                
+        header = SurigaoRequestHeader.objects.get(pk=rs_number)
+        items = SurigaoRequestItems.objects.filter(header=header)
+        total = items.aggregate(amount_sum=Sum('amount'))['amount_sum']
+        persons = AuthorizedPersons.objects.filter(header=SurigaoRequestHeader.objects.get(pk=rs_number))
+        person_details = {}
+        for person in persons:
+            if person.signed:
+                person_details[person.personnel.title.replace(" ","_")] = (person.personnel.name, person.personnel.signature)
+            else:
+                person_details[person.personnel.title.replace(" ","_")] = (person.personnel.name, "")
+
+
+        return render(request, 'main/actions/rsSlip.html', {'header':header, 'items':items, 'fields':list(range(1,16-len(items)+1)), 'total':total, 'persons':person_details, 'title':'Surigao'})
+    else:
+        return redirect('login')    
 
 def add_authorizedPerson_view(request, rs_number, toAuthorizedPersonPage=False):
     if request.user.is_authenticated:

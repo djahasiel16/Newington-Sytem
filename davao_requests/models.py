@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from main.models import Personnel
 # Create your models here.
 class DavaoRequestHeader(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -37,19 +37,23 @@ class DavaoRequestItems(models.Model):
 
 class AuthorizedPersons(models.Model):
     header = models.ForeignKey(DavaoRequestHeader, on_delete=models.CASCADE)
-    name = models.CharField(max_length=53)
-    title = models.CharField(max_length=30)
+    personnel = models.ForeignKey(Personnel, on_delete=models.CASCADE, related_name="AuthorizedPersonsDavao", null=True)
+    # personnel = models.ManyToManyField(Personnel)
+    name = models.CharField(max_length=53, null=True, blank=True)
+    title = models.CharField(max_length=30, null=True, blank=True)
     signature = models.ImageField(upload_to='signatures/', blank=True)
-
-    # def __str__(self):
-    #     return self.name
-
-class Persons(models.Model):
-    name = models.CharField(max_length=53)
-    title = models.CharField(max_length=30)
+    signed = models.BooleanField(null=True, default=False)
 
     def __str__(self):
-        return self.name
+        return f"{self.personnel.name} {self.personnel.title}"
+    
+# class Persons(models.Model):
+#     name = models.CharField(max_length=53)
+#     title = models.CharField(max_length=30)
+#     signature = models.ImageField(upload_to='signatures/', blank=True)
+
+#     def __str__(self):
+#         return self.name
 
 class Monitoring(models.Model):
     header = models.ForeignKey(DavaoRequestItems, on_delete=models.CASCADE, null=True, blank=True)
