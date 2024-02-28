@@ -47,13 +47,6 @@ class AuthorizedPersons(models.Model):
     def __str__(self):
         return f"{self.personnel.name} {self.personnel.title}"
     
-# class Persons(models.Model):
-#     name = models.CharField(max_length=53)
-#     title = models.CharField(max_length=30)
-#     signature = models.ImageField(upload_to='signatures/', blank=True)
-
-#     def __str__(self):
-#         return self.name
 
 class Monitoring(models.Model):
     header = models.ForeignKey(DavaoRequestItems, on_delete=models.CASCADE, null=True, blank=True)
