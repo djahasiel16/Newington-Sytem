@@ -17,6 +17,7 @@ Authorized Persons
         <tbody>
             {% for person in persons %}
             {% comment %} editedPart {% endcomment %}
+            {% with person=person %}
             {% if person.signed %}
             <tr class="table-success">
             {% else %}
@@ -43,7 +44,7 @@ Authorized Persons
                     </button>
 
                     {% if title == 'Davao' %}
-                    <button onclick="confirmDelete{{person.id}}('{{ person.name }}')" role="button"
+                    <button onclick="confirmDelete{{person.id}}('{{ person.personnel.name }}')" role="button"
                         class="btn btn-outline-danger btn-sm">
                         <i class="bi bi-trash3-fill"></i>
                         Delete
@@ -60,7 +61,7 @@ Authorized Persons
                     </script>
 
                     {% elif title == 'Cotabato' %}
-                    <button onclick="confirmDelete{{person.id}}('{{ person.name }}')" role="button"
+                    <button onclick="confirmDelete{{person.id}}('{{ person.personnel.name }}')" role="button"
                         class="btn btn-outline-danger btn-sm">
                         <i class="bi bi-trash3-fill"></i>
                         Delete
@@ -76,7 +77,7 @@ Authorized Persons
                         }
                     </script>
                     {% elif title == 'Negros' %}
-                    <button onclick="confirmDelete{{person.id}}('{{ person.name }}')" role="button"
+                    <button onclick="confirmDelete{{person.id}}('{{ person.personnel.name }}')" role="button"
                         class="btn btn-outline-danger btn-sm">
                         <i class="bi bi-trash3-fill"></i>
                         Delete
@@ -92,7 +93,7 @@ Authorized Persons
                         }
                     </script>
                     {% elif title == 'Surigao' %}
-                    <button onclick="confirmDelete{{person.id}}('{{ person.name }}')" role="button"
+                    <button onclick="confirmDelete{{person.id}}('{{ person.personnel.name }}')" role="button"
                         class="btn btn-outline-danger btn-sm">
                         <i class="bi bi-trash3-fill"></i>
                         Delete
@@ -108,7 +109,7 @@ Authorized Persons
                         }
                     </script>
                     {% elif title == 'Bukidnon' %}
-                    <button onclick="confirmDelete{{person.id}}('{{ person.name }}')" role="button"
+                    <button onclick="confirmDelete{{person.id}}('{{ person.personnel.name }}')" role="button"
                         class="btn btn-outline-danger btn-sm">
                         <i class="bi bi-trash3-fill"></i>
                         Delete
