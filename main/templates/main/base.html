@@ -366,6 +366,12 @@
                 var qtyValue = parseFloat(form.find('.quantity').val()) || 0;
                 var unitCostValue = parseFloat(form.find('.unit_cost').val()) || 0;
 
+                if(qtyValue == ""){
+                    form.find('.quantity').val(0)
+                }
+                if(unitCostValue == ""){
+                    form.find('.unit_cost').val(0)
+                }
                 var rs = qtyValue * unitCostValue;
                 form.find('.amount').val(rs);
             });
