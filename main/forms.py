@@ -1,21 +1,11 @@
 from django import forms
-from .models import DavaoAuthorizedPersons, CotabatoAuthorizedPersons, NegrosAuthorizedPersons, SurigaoAuthorizedPersons
+# from .models import DavaoAuthorizedPersons, CotabatoAuthorizedPersons, NegrosAuthorizedPersons, SurigaoAuthorizedPersons
 from davao_requests.models import AuthorizedPersons as dvo_authorizedPerson
 from cotabato_requests.models import AuthorizedPersons as cbt_authorizedPerson
 from negros_requests.models import AuthorizedPersons as ngro_authorizedPerson
 from surigao_requests.models import AuthorizedPersons as srgo_authorizedPerson
 
 from .models import Personnel
-
-class DavaoAuthorizedPersonsForm(forms.ModelForm):
-    class Meta:
-        model = DavaoAuthorizedPersons
-        fields = [
-            'firstname',
-            'middle_initial',
-            'lastname',
-            'role'
-        ]
         
 class PersonnelForm(forms.ModelForm):
     TITLE_CHOICES = {
@@ -30,7 +20,8 @@ class PersonnelForm(forms.ModelForm):
         fields = [
             'name',
             'title',
-            'signature'
+            'signature',
+            'default'
         ]
         TITLE_CHOICES = {
         'Requested by':'Requested by',
