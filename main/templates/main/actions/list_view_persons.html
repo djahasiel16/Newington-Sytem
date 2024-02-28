@@ -17,7 +17,6 @@ Authorized Persons
         <tbody>
             {% for person in persons %}
             {% comment %} editedPart {% endcomment %}
-            {% with person=person %}
             {% if person.signed %}
             <tr class="table-success">
             {% else %}
