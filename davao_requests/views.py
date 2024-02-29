@@ -165,7 +165,7 @@ def add_authorizedPerson_view(request, rs_number, toAuthorizedPersonPage=False):
             form = AuthorizedPersonsForm(request.POST, request.FILES, initial=init_data)
             if form.is_valid:
                 form.save()
-                
+                            
                 messages.success(request, "Person Added Successfully")
                 return redirect(reverse('davao_add_authorizedPerson', kwargs={'rs_number':rs_number}))
             

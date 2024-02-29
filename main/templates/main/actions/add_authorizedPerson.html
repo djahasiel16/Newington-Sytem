@@ -26,8 +26,8 @@
             <h1>Add Authorized Person</h1>
             {% csrf_token %}
             {{form|crispy}}
-            <button type="submit" class="btn btn-dark my-3">ADD</button>
-            <a href="/{{title|lower}}/list_viewRequest_items/{{persons.0.header.rs_number}}/" class="btn btn-secondary my-3">Finish</a>
+            <button type="submit" class="btn btn-dark my-3">ADD PERSON</button>
+            <a href="/{{title|lower}}/list_viewRequest_items/{{form.initial.header.rs_number}}/" class="btn btn-secondary my-3">ADD ITEMS</a>
         </form>
     </div>
 
