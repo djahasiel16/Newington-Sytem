@@ -8,6 +8,7 @@ from .forms import NegrosRequestHeaderForm, NegrosRequestItemsForm, AuthorizedPe
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib import messages
+from main.models import Personnel
 
 # Create your views here.
 person_form = AuthorizedPersonsForm
@@ -133,7 +134,18 @@ def rs_view(request, rs_number):
                 person_details[person.personnel.title.replace(" ","_")] = (person.personnel.name, "")
 
 
-        return render(request, 'main/actions/rsSlip.html', {'header':header, 'items':items, 'fields':list(range(1,16-len(items)+1)), 'total':total, 'persons':person_details, 'title':'Negros'})
+        checkedBy = Personnel.objects.filter(title="Checked by")[0]
+        approvedBy = Personnel.objects.filter(title="Approved by")[0]
+        
+        return render(request, 'main/actions/rsSlip.html', {
+            'header':header, 
+            'items':items, 
+            'fields':list(range(1,16-len(items)+1)), 
+            'total':total, 
+            'persons':person_details,
+            'checkedBy':checkedBy,
+            'approvedBy':approvedBy,
+            'title':'Negros'})
     else:
         return redirect('login')
 

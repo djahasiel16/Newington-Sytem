@@ -27,6 +27,7 @@
             {% csrf_token %}
             {{form|crispy}}
             <button type="submit" class="btn btn-dark my-3">ADD</button>
+            <a href="/{{title|lower}}/list_viewRequest_items/{{persons.0.header.rs_number}}/" class="btn btn-secondary my-3">Finish</a>
         </form>
     </div>
 
