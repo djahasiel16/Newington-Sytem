@@ -271,9 +271,14 @@ def list_view_items(request):
         return redirect('login')
 
 def list_viewRequest_items(request, rs_number):
+    if len(AuthorizedPersons.objects.filter(header=rs_number)) == len(AuthorizedPersonsForm.Meta.TITLE_CHOICES.keys()):
+        disabled = True
+    else:
+        disabled = False
+        
     items = SurigaoRequestItems.objects.filter(header=SurigaoRequestHeader.objects.get(pk=rs_number))
     rs = SurigaoRequestHeader.objects.get(pk=rs_number)
-    return render(request, 'main/actions/list_viewRequest_items.html', {'data':items, 'rs_header':rs,'title':'Surigao'})
+    return render(request, 'main/actions/list_viewRequest_items.html', {'data':items, 'rs_header':rs,'title':'Surigao', 'disabled':disabled})
 
 def go_back(request):
     if request.user.is_authenticated:

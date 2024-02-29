@@ -271,9 +271,14 @@ def list_view_items(request):
         return redirect('login')
 
 def list_viewRequest_items(request, rs_number):
+    if len(AuthorizedPersons.objects.filter(header=rs_number)) == len(AuthorizedPersonsForm.Meta.TITLE_CHOICES.keys()):
+        disabled = True
+    else:
+        disabled = False
+        
     items = BukidnonRequestItems.objects.filter(header=BukidnonRequestHeader.objects.get(pk=rs_number))
     rs = BukidnonRequestHeader.objects.get(pk=rs_number)
-    return render(request, 'main/actions/list_viewRequest_items.html', {'data':items, 'rs_header':rs,'title':'Bukidnon'})
+    return render(request, 'main/actions/list_viewRequest_items.html', {'data':items, 'rs_header':rs,'title':'Bukidnon', 'disabled':disabled})
 
 def go_back(request):
     if request.user.is_authenticated:

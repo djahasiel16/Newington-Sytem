@@ -9,13 +9,12 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib import messages
 from main.models import Personnel
-# timezone.now().year
+
 
 # Create your views here.
 person_form = AuthorizedPersonsForm
 
 def dashboard(request):
-    # monitoringData = DavaoRequestItems.objects.all()
     if request.user.is_authenticated:
         monitoringData = Monitoring.objects.prefetch_related('header')
         
@@ -23,10 +22,10 @@ def dashboard(request):
     else:
         return redirect('login')
 
+
 def add_request_view(request):
     if request.user.is_authenticated:
-        
-    
+
         if request.method == 'POST':
             form = DavaoRequestHeaderForm(request.POST, instance=DavaoRequestHeader(user=User.objects.get(pk=request.user.id)))
             if form.is_valid:
@@ -38,6 +37,7 @@ def add_request_view(request):
                 print(form.errors)
             
         rs_number = f"DVO{str(timezone.now().year)[2:]}-"
+        
         try:
             idx = DavaoRequestHeader.objects.all()
             rs_number += str(len(idx)+1).zfill(3)
@@ -75,7 +75,6 @@ def add_items_view(request, rs_number):
             
         init_data = {'header':rs_number}
         items = DavaoRequestItems.objects.filter(header=DavaoRequestHeader.objects.get(pk=rs_number))
-        # items[0].
         if request.method == "POST":
             form = DavaoRequestItemsForm(request.POST)
             if form.is_valid:
@@ -92,7 +91,7 @@ def add_itemsRequest_view(request, rs_number):
     if request.user.is_authenticated:
             
         init_data = {'header':rs_number}
-        # items[0].
+
         if request.method == "POST":
             form = DavaoRequestItemsForm(request.POST)
             if form.is_valid:
@@ -148,7 +147,6 @@ def rs_view(request, rs_number):
 def add_authorizedPerson_view(request, rs_number, toAuthorizedPersonPage=False):
     if request.user.is_authenticated:
                 
-        # global person_form
         init_data = {'header':DavaoRequestHeader.objects.get(pk=rs_number)}
         persons = AuthorizedPersons.objects.filter(header=DavaoRequestHeader.objects.get(pk=rs_number))
         if request.method == 'POST':
@@ -183,8 +181,7 @@ def list_view_requests(request):
 
 def edit_item_view(request, rs_id):
     if request.user.is_authenticated:
-            
-        # header=DavaoRequestHeader.objects.get(pk=rs_id)
+
         item = DavaoRequestItems.objects.get(pk=rs_id)
         
         form = DavaoRequestItemsForm(request.POST or None, instance=item) 
@@ -201,7 +198,7 @@ def edit_item_view(request, rs_id):
 
 def edit_item_listview(request, rs_id):
     if request.user.is_authenticated:
-        # header=DavaoRequestHeader.objects.get(pk=rs_id)
+
         item = DavaoRequestItems.objects.get(pk=rs_id)
 
         form = DavaoRequestItemsForm(request.POST or None, instance=item)
@@ -257,7 +254,6 @@ def delete_person(request, person_id):
         print(f"ID: {person.pk}| Person ID: {person_id}, Name: {person.name}")
         person.delete()
         messages.success(request, "Person Deleted Successfully")
-        # return redirect(reverse('davao_add_authorizedPerson', kwargs={'rs_number':person.header.rs_number}))
         return redirect(reverse(list_view_persons))
     else:
         return redirect('login')
@@ -279,9 +275,14 @@ def list_view_items(request):
         return redirect('login')
 
 def list_viewRequest_items(request, rs_number):
+    if len(AuthorizedPersons.objects.filter(header=rs_number)) == len(AuthorizedPersonsForm.Meta.TITLE_CHOICES.keys()):
+        disabled = True
+    else:
+        disabled = False
+        
     items = DavaoRequestItems.objects.filter(header=DavaoRequestHeader.objects.get(pk=rs_number))
     rs = DavaoRequestHeader.objects.get(pk=rs_number)
-    return render(request, 'main/actions/list_viewRequest_items.html', {'data':items, 'rs_header':rs,'title':'Davao'})
+    return render(request, 'main/actions/list_viewRequest_items.html', {'data':items, 'rs_header':rs,'title':'Davao', 'disabled':disabled})
 
 def go_back(request):
     if request.user.is_authenticated:

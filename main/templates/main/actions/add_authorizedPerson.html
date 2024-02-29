@@ -3,28 +3,23 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="row justify-content-start align-items-center">
+<!-- <div class="row justify-content-start align-items-center">
     <div class="col-2 align-items-center">
-        <!-- <div class="fw-medium text-tertiary bg-secondary text-center"
-            style="width: 30px; height: 30px; border-radius: 15px; padding: 0px;">1</div> -->
+
         <a class="fw-medium text-decoration-none text-black">
             <i class="bi bi-1-circle"></i>
             REQUEST HEADER
         </a>
     </div>
     <div class="col-2 align-items-center">
-        <!-- <div class="fw-medium bg-primary text-white text-center"
-            style="width: 30px; height: 30px; border-radius: 15px; padding: 0px;">2</div> -->
             <i class="bi bi-2-circle-fill text-primary"></i>
         <a class="fw-medium">PERSONS</a>
     </div>
     <div class="col-2 align-items-center">
-        <!-- <div class="fw-medium text-tertiary bg-secondary text-center"
-            style="width: 30px; height: 30px; border-radius: 15px; padding: 0px;">3</div> -->
             <i class="bi bi-3-circle"></i>
         <a class="fw-medium text-decoration-none text-black">REQUEST ITEMS</a>
     </div>
-</div>
+</div> -->
 <div class="row mt-3">
     <div class="col">
         <form method="post" class="form-control shadow" enctype="multipart/form-data">
@@ -32,11 +27,12 @@
             {% csrf_token %}
             {{form|crispy}}
             <button type="submit" class="btn btn-dark my-3">ADD</button>
-
         </form>
     </div>
 
+    
     <div class="col shadow rounded">
+        {% if persons %}
         <h1>Added Person</h1>
         <table class="table">
             <thead class="fs-6">
@@ -54,6 +50,9 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% else %}
+        <div class="text-center">No Authorized Persons Added Yet</div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

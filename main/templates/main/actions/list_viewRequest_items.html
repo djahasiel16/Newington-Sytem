@@ -15,6 +15,21 @@
 
 <button type="button" class="btn btn-dark my-3" data-bs-toggle="modal"
     data-bs-target="#item{{rs_header.rs_number}}">Add Item</button>
+
+{% if not disabled %}
+    {% if title == 'Davao' %}
+    <a href="{% url 'davao_add_authorizedPerson' rs_header.rs_number %}" class="btn btn-secondary my-3">Authorized Person</a>
+    {% elif title == 'Cotabato' %}
+    <a href="{% url 'cotabato_add_authorizedPerson' rs_header.rs_number %}" class="btn btn-secondary my-3">Authorized Person</a>
+    {% elif title == 'Negros' %}
+    <a href="{% url 'negros_add_authorizedPerson' rs_header.rs_number %}" class="btn btn-secondary my-3">Authorized Person</a>
+    {% elif title == 'Surigao' %}
+    <a href="{% url 'surigao_add_authorizedPerson' rs_header.rs_number %}" class="btn btn-secondary my-3">Authorized Person</a>
+    {% elif title == 'Bukidnon' %}
+    <a href="{% url 'bukidnon_add_authorizedPerson' rs_header.rs_number %}" class="btn btn-secondary my-3">Authorized Person</a>
+    {% endif %}
+{% endif %}
+
 <table class="table table-sm text-center table-striped table-hover" id="request-items-table" style="font-size: 9pt;">
     <thead>
         <th>RS NO</th>
