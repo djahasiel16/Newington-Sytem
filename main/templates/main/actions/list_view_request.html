@@ -4,238 +4,240 @@
 {% block content %}
 
 
-<div class="table-responsive small rounded shadow p-3 mb-2">
-    <table class="table table-striped table-sm table-hover" id="data-table" style="font-size: 9pt;">
-        <thead>
-            <tr>
-                <th>RS Number</th>
-                <th>Particulars</th>
-                <th>Payee</th>
-                <!-- <th>Project</th> -->
-                <th>Date Requested</th>
-                <th>Date Needed</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for r in rs %}
-            {% if r.urgent %}
-            <tr class="table-bordered">
-                {% else %}
-            <tr class="table-success">
-                {% endif %}
-                <td class="fw-medium">{{r.rs_number}}</td>
-
-                <td>{{r.particulars}}</td>
-                <td>{{r.payee}}</td>
-                <!-- <td>{{r.project}}</td> -->
-                <td>{{r.date_requested}}</td>
-                <td>{{r.date_needed}}</td>
-
-
-
-
-                <td class="text-end">
-                    <div class="row">
-                        <div class="col">
-
-                            {% if title == 'Davao' %}
-                            {% load davao_tags %}
-                            <a href="{% url 'davao_list_viewRequest_items' r.rs_number %}" role="button"
-                                class="btn btn-outline-dark btn-sm">
-                                <i class="bi bi-plus-circle-fill"></i>
-                                View/Add
-                                <span class="visually-hidden">Button</span>
-                            </a>
-
-                            {% elif title == 'Cotabato' %}
-                            {% load cotabato_tags %}
-                            <a href="{% url 'cotabato_list_viewRequest_items' r.rs_number %}" role="button"
-                                class="btn btn-outline-dark btn-sm">
-                                <i class="bi bi-plus-circle-fill"></i>
-                                View/Add
-                                <span class="visually-hidden">Button</span>
-                            </a>
-
-                            {% elif title == 'Negros' %}
-                            {% load negros_tags %}
-                            <a href="{% url 'negros_list_viewRequest_items' r.rs_number %}" role="button"
-                                class="btn btn-outline-dark btn-sm">
-                                <i class="bi bi-plus-circle-fill"></i>
-                                View/Add
-                                <span class="visually-hidden">Button</span>
-                            </a>
-
-                            {% elif title == 'Surigao' %}
-                            {% load surigao_tags %}
-                            <a href="{% url 'surigao_list_viewRequest_items' r.rs_number %}" role="button"
-                                class="btn btn-outline-dark btn-sm">
-                                <i class="bi bi-plus-circle-fill"></i>
-                                View/Add
-                                <span class="visually-hidden">Button</span>
-                            </a>
-                            {% comment %} {% endif %} {% endcomment %}
-
-                            {% elif title == 'Bukidnon' %}
-                            {% load bukidnon_tags %}
-                            <a href="{% url 'bukidnon_list_viewRequest_items' r.rs_number %}" role="button"
-                                class="btn btn-outline-dark btn-sm">
-                                <i class="bi bi-plus-circle-fill"></i>
-                                View/Add
-                                <span class="visually-hidden">Button</span>
-                            </a>
-                            
-                            {% endif %}
-
-                            <!-- <a href="{% url 'davao_edit_request_view' r.rs_number %}" type="button" -->
-                            <span role="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#{{r.rs_number}}">
-                                <i class="bi bi-pencil-fill"></i>
-                                Edit
-                                <span class="visually-hidden">Button</span>
-                            </span>
-                        </div>
-                    </div>
-                </td>
-
-
-
-
-
-            </tr>
-
-
-            <!-- Modal -->
-            <div class="modal fade" id="{{r.rs_number}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Update Request</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        {% if title == 'Davao' %}
-                        <form action="{% url 'davao_edit_request_view' r.rs_number %}" method="post">
-                            <div class="modal-body">
+<div class="scrollable">
+    <div class="table-responsive small rounded shadow p-3 mb-2">
+        <table class="table table-striped table-sm table-hover" id="data-table" style="font-size: 9pt;">
+            <thead>
+                <tr>
+                    <th>RS Number</th>
+                    <th>Particulars</th>
+                    <th>Payee</th>
+                    <!-- <th>Project</th> -->
+                    <th>Date Requested</th>
+                    <!-- <th>Date Needed</th> -->
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in rs %}
+                {% if r.urgent %}
+                <tr class="table-bordered">
+                    {% else %}
+                <tr class="table-success">
+                    {% endif %}
+                    <td class="fw-medium">{{r.rs_number}}</td>
+    
+                    <td>{{r.particulars}}</td>
+                    <td>{{r.payee}}</td>
+                    <!-- <td>{{r.project}}</td> -->
+                    <td>{{r.date_requested}}</td>
+                    <!-- <td>{{r.date_needed}}</td> -->
+    
+    
+    
+    
+                    <td class="text-end">
+                        <div class="row">
+                            <div class="col">
+    
+                                {% if title == 'Davao' %}
                                 {% load davao_tags %}
-                                {% editRequestModalForm r.rs_number %}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <a class="btn btn-danger" onclick="confirmDelete('{{ r.rs_number }}')">Delete</a>
-
-                                <script>
-                                    function confirmDelete(rsNumber) {
-                                        if (confirm("Are you sure you want to delete request number " + rsNumber + "?")) {
-                                            // "{% url 'davao_delete_request' r.rs_number %}"
-                                            window.location.href = "{% url 'davao_delete_request' r.rs_number %}";
-                                        } else {
-                                            // Do nothing or provide feedback to the user that the delete action was canceled.
-                                        }
-                                    }
-                                </script>
-                                <button type="submit" class="btn btn-dark">Save changes</button>
-                            </div>
-                        </form>
-                        {% elif title == 'Cotabato' %}
-                        <form action="{% url 'cotabato_edit_request_view' r.rs_number %}" method="post">
-                            <div class="modal-body">
+                                <a href="{% url 'davao_list_viewRequest_items' r.rs_number %}" role="button"
+                                    class="btn btn-outline-dark btn-sm">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                    View/Add
+                                    <span class="visually-hidden">Button</span>
+                                </a>
+    
+                                {% elif title == 'Cotabato' %}
                                 {% load cotabato_tags %}
-                                {% editRequestModalForm r.rs_number %}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <a class="btn btn-danger" onclick="confirmDelete('{{ r.rs_number }}')">Delete</a>
-
-                                <script>
-                                    function confirmDelete(rsNumber) {
-                                        if (confirm("Are you sure you want to delete request number " + rsNumber + "?")) {
-                                            // "{% url 'davao_delete_request' r.rs_number %}"
-                                            window.location.href = "{% url 'cotabato_delete_request' r.rs_number %}";
-                                        } else {
-                                            // Do nothing or provide feedback to the user that the delete action was canceled.
-                                        }
-                                    }
-                                </script>
-                                <button type="submit" class="btn btn-dark">Save changes</button>
-                            </div>
-                        </form>
-                        {% elif title == 'Negros' %}
-                        <form action="{% url 'negros_edit_request_view' r.rs_number %}" method="post">
-                            <div class="modal-body">
+                                <a href="{% url 'cotabato_list_viewRequest_items' r.rs_number %}" role="button"
+                                    class="btn btn-outline-dark btn-sm">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                    View/Add
+                                    <span class="visually-hidden">Button</span>
+                                </a>
+    
+                                {% elif title == 'Negros' %}
                                 {% load negros_tags %}
-                                {% editRequestModalForm r.rs_number %}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <a class="btn btn-danger" onclick="confirmDelete('{{ r.rs_number }}')">Delete</a>
-
-                                <script>
-                                    function confirmDelete(rsNumber) {
-                                        if (confirm("Are you sure you want to delete request number " + rsNumber + "?")) {
-                                            // "{% url 'davao_delete_request' r.rs_number %}"
-                                            window.location.href = "{% url 'negros_delete_request' r.rs_number %}";
-                                        } else {
-                                            // Do nothing or provide feedback to the user that the delete action was canceled.
-                                        }
-                                    }
-                                </script>
-                                <button type="submit" class="btn btn-dark">Save changes</button>
-                            </div>
-                        </form>
-                        {% elif title == 'Surigao' %}
-                        <form action="{% url 'surigao_edit_request_view' r.rs_number %}" method="post">
-                            <div class="modal-body">
+                                <a href="{% url 'negros_list_viewRequest_items' r.rs_number %}" role="button"
+                                    class="btn btn-outline-dark btn-sm">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                    View/Add
+                                    <span class="visually-hidden">Button</span>
+                                </a>
+    
+                                {% elif title == 'Surigao' %}
                                 {% load surigao_tags %}
-                                {% editRequestModalForm r.rs_number %}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <a class="btn btn-danger" onclick="confirmDelete('{{ r.rs_number }}')">Delete</a>
-
-                                <script>
-                                    function confirmDelete(rsNumber) {
-                                        if (confirm("Are you sure you want to delete request number " + rsNumber + "?")) {
-                                            // "{% url 'davao_delete_request' r.rs_number %}"
-                                            window.location.href = "{% url 'surigao_delete_request' r.rs_number %}";
-                                        } else {
-                                            // Do nothing or provide feedback to the user that the delete action was canceled.
-                                        }
-                                    }
-                                </script>
-                                <button type="submit" class="btn btn-dark">Save changes</button>
-                            </div>
-                        </form>
-                        {% elif title == 'Bukidnon' %}
-                        <form action="{% url 'surigao_edit_request_view' r.rs_number %}" method="post">
-                            <div class="modal-body">
+                                <a href="{% url 'surigao_list_viewRequest_items' r.rs_number %}" role="button"
+                                    class="btn btn-outline-dark btn-sm">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                    View/Add
+                                    <span class="visually-hidden">Button</span>
+                                </a>
+                                {% comment %} {% endif %} {% endcomment %}
+    
+                                {% elif title == 'Bukidnon' %}
                                 {% load bukidnon_tags %}
-                                {% editRequestModalForm r.rs_number %}
+                                <a href="{% url 'bukidnon_list_viewRequest_items' r.rs_number %}" role="button"
+                                    class="btn btn-outline-dark btn-sm">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                    View/Add
+                                    <span class="visually-hidden">Button</span>
+                                </a>
+                                
+                                {% endif %}
+    
+                                <!-- <a href="{% url 'davao_edit_request_view' r.rs_number %}" type="button" -->
+                                <span role="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#{{r.rs_number}}">
+                                    <i class="bi bi-pencil-fill"></i>
+                                    Edit
+                                    <span class="visually-hidden">Button</span>
+                                </span>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <a class="btn btn-danger" onclick="confirmDelete('{{ r.rs_number }}')">Delete</a>
-
-                                <script>
-                                    function confirmDelete(rsNumber) {
-                                        if (confirm("Are you sure you want to delete request number " + rsNumber + "?")) {
-                                            // "{% url 'bukidnon_delete_request' r.rs_number %}"
-                                            window.location.href = "{% url 'bukidnon_delete_request' r.rs_number %}";
-                                        } else {
-                                            // Do nothing or provide feedback to the user that the delete action was canceled.
+                        </div>
+                    </td>
+    
+    
+    
+    
+    
+                </tr>
+    
+    
+                <!-- Modal -->
+                <div class="modal fade" id="{{r.rs_number}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Request</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            {% if title == 'Davao' %}
+                            <form action="{% url 'davao_edit_request_view' r.rs_number %}" method="post">
+                                <div class="modal-body">
+                                    {% load davao_tags %}
+                                    {% editRequestModalForm r.rs_number %}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a class="btn btn-danger" onclick="confirmDelete('{{ r.rs_number }}')">Delete</a>
+    
+                                    <script>
+                                        function confirmDelete(rsNumber) {
+                                            if (confirm("Are you sure you want to delete request number " + rsNumber + "?")) {
+                                                // "{% url 'davao_delete_request' r.rs_number %}"
+                                                window.location.href = "{% url 'davao_delete_request' r.rs_number %}";
+                                            } else {
+                                                // Do nothing or provide feedback to the user that the delete action was canceled.
+                                            }
                                         }
-                                    }
-                                </script>
-                                <button type="submit" class="btn btn-dark">Save changes</button>
-                            </div>
-                        </form>
-                        {% endif %}
+                                    </script>
+                                    <button type="submit" class="btn btn-dark">Save changes</button>
+                                </div>
+                            </form>
+                            {% elif title == 'Cotabato' %}
+                            <form action="{% url 'cotabato_edit_request_view' r.rs_number %}" method="post">
+                                <div class="modal-body">
+                                    {% load cotabato_tags %}
+                                    {% editRequestModalForm r.rs_number %}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a class="btn btn-danger" onclick="confirmDelete('{{ r.rs_number }}')">Delete</a>
+    
+                                    <script>
+                                        function confirmDelete(rsNumber) {
+                                            if (confirm("Are you sure you want to delete request number " + rsNumber + "?")) {
+                                                // "{% url 'davao_delete_request' r.rs_number %}"
+                                                window.location.href = "{% url 'cotabato_delete_request' r.rs_number %}";
+                                            } else {
+                                                // Do nothing or provide feedback to the user that the delete action was canceled.
+                                            }
+                                        }
+                                    </script>
+                                    <button type="submit" class="btn btn-dark">Save changes</button>
+                                </div>
+                            </form>
+                            {% elif title == 'Negros' %}
+                            <form action="{% url 'negros_edit_request_view' r.rs_number %}" method="post">
+                                <div class="modal-body">
+                                    {% load negros_tags %}
+                                    {% editRequestModalForm r.rs_number %}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a class="btn btn-danger" onclick="confirmDelete('{{ r.rs_number }}')">Delete</a>
+    
+                                    <script>
+                                        function confirmDelete(rsNumber) {
+                                            if (confirm("Are you sure you want to delete request number " + rsNumber + "?")) {
+                                                // "{% url 'davao_delete_request' r.rs_number %}"
+                                                window.location.href = "{% url 'negros_delete_request' r.rs_number %}";
+                                            } else {
+                                                // Do nothing or provide feedback to the user that the delete action was canceled.
+                                            }
+                                        }
+                                    </script>
+                                    <button type="submit" class="btn btn-dark">Save changes</button>
+                                </div>
+                            </form>
+                            {% elif title == 'Surigao' %}
+                            <form action="{% url 'surigao_edit_request_view' r.rs_number %}" method="post">
+                                <div class="modal-body">
+                                    {% load surigao_tags %}
+                                    {% editRequestModalForm r.rs_number %}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a class="btn btn-danger" onclick="confirmDelete('{{ r.rs_number }}')">Delete</a>
+    
+                                    <script>
+                                        function confirmDelete(rsNumber) {
+                                            if (confirm("Are you sure you want to delete request number " + rsNumber + "?")) {
+                                                // "{% url 'davao_delete_request' r.rs_number %}"
+                                                window.location.href = "{% url 'surigao_delete_request' r.rs_number %}";
+                                            } else {
+                                                // Do nothing or provide feedback to the user that the delete action was canceled.
+                                            }
+                                        }
+                                    </script>
+                                    <button type="submit" class="btn btn-dark">Save changes</button>
+                                </div>
+                            </form>
+                            {% elif title == 'Bukidnon' %}
+                            <form action="{% url 'surigao_edit_request_view' r.rs_number %}" method="post">
+                                <div class="modal-body">
+                                    {% load bukidnon_tags %}
+                                    {% editRequestModalForm r.rs_number %}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a class="btn btn-danger" onclick="confirmDelete('{{ r.rs_number }}')">Delete</a>
+    
+                                    <script>
+                                        function confirmDelete(rsNumber) {
+                                            if (confirm("Are you sure you want to delete request number " + rsNumber + "?")) {
+                                                // "{% url 'bukidnon_delete_request' r.rs_number %}"
+                                                window.location.href = "{% url 'bukidnon_delete_request' r.rs_number %}";
+                                            } else {
+                                                // Do nothing or provide feedback to the user that the delete action was canceled.
+                                            }
+                                        }
+                                    </script>
+                                    <button type="submit" class="btn btn-dark">Save changes</button>
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-            </div>
-            {% endfor %}
-        </tbody>
-    </table>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>

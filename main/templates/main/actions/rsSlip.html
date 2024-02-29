@@ -99,7 +99,7 @@
         <table class="table table-borderless border border-dark fw-medium mb-2" style="font-size: 9pt;">
             <tr>
                 <td class="px-1">Payee:</td>
-                <td style="width: 500px;" class="border-bottom border-dark px-1">{{header.payee}}</td>
+                <td style="width: 700px;" class="border-bottom border-dark px-1">{{header.payee}}</td>
                 <td class="p-1">R.S. #:</td>
                 <td class="border-bottom border-dark px-1" id="rs_number">{{header.rs_number}}</td>
             </tr>
@@ -108,18 +108,18 @@
                 <td class="px-1">Particulars:</td>
                 <td class="border-bottom border-dark px-1"><em>{{header.particulars}}</em></td>
                 <td style="width: 150px;" class="px-1">Date Requested:</td>
-                <td style="width: 300px;" class="border-bottom border-dark px-1">{{header.date_requested}}</td>
+                <td style="width: 200px;" class="border-bottom border-dark px-1">{{header.date_requested}}</td>
             </tr>
 
             <tr>
                 <td class="px-1 align-middle">Project:</td>
-                <td style="width: 300px;" class="border-bottom border-dark px-1 text-wrap align-middle">
+                <td style="width: 200px;" class="border-bottom border-dark px-1 text-wrap align-middle">
                     {{header.project}}</td>
                 <td class="p-1 align-middle">Date Needed:</td>
                 {% if header.urgent %}
-                <td style="width: 300px;" class="border-bottom border-dark px-1"></td>
+                <td style="width: 200px;" class="border-bottom border-dark px-1"></td>
                 {% else %}
-                <td style="width: 300px;" class="border-bottom border-dark px-1 align-middle">{{header.date_needed}}
+                <td style="width: 200px;" class="border-bottom border-dark px-1 align-middle">{{header.date_needed}}
                 </td>
                 {% endif %}
             </tr>
