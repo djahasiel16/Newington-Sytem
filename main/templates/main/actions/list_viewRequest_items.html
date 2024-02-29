@@ -3,9 +3,9 @@
 {% block content-title %} 
 
 {% if rs_header.payee %}
-    {{rs_header.rs_number}}: {{rs_header.payee}}
+    {{rs_header.rs_number}}: {{rs_header.payee|truncatechars:40}}
 {% else %}
-    {{rs_header.rs_number}}: {{rs_header.particulars}}
+    {{rs_header.rs_number}}: {{rs_header.particulars|truncatechars:40}}
 {% endif %}
 
 {% endblock %}
