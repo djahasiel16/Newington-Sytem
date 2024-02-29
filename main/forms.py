@@ -30,7 +30,8 @@ class PersonnelForm(forms.ModelForm):
         fields = [
             'name',
             'title',
-            'signature'
+            'signature',
+            'default'
         ]
         TITLE_CHOICES = {
         'Requested by':'Requested by',
