@@ -31,7 +31,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('authentication.urls')),
     path('sys-settings/', include('sys_settings.urls')),
-    re_path(r'^.*/$', views.home),
+    # re_path(r'^.*/$', views.home),
 ]
 
 # if settings.DEBUG:
